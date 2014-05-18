@@ -1,0 +1,10 @@
+{
+	"db_host"      : "127.0.0.1",
+	"db_port"      : "3306",
+	"db_user"      : "cpx",
+	"db_password"  : "cpx",
+	"db_name"      : "cpx",
+	"static_host"  : "static.cpx.cx",
+	"tracker_host" : "tracker.cpx.cx",
+	"www_host"     : "www.cpx.cx"
+}
