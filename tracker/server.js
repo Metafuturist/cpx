@@ -5,6 +5,12 @@ var querystring = require('querystring');
 var url = require('url');
 var fs = require('fs');
 
+console.info(' *******************');
+console.info(' * Welcome to CPX! *');
+console.info(' *******************');
+console.info('');
+console.info('This is the tracker server');
+
 var server = http.createServer(function(req, res){
 	switch(url.parse(req.url).pathname){
 		case '/announce':
@@ -19,11 +25,16 @@ var server = http.createServer(function(req, res){
 	}
 });
 
+console.info('');
+console.info(' * Loading Configuration...');
+
 // Getting the configuration
 fs.readFile(__dirname + '/../config.json', {encoding: 'utf-8'}, function(err, data){
 	if(err)
 		throw 'Unable to read configuration file : ' + err;
 	config = JSON.parse(data);
+	
+	console.log('Successfully loaded configuration !');
 	
 	// Set a Database Connections Pool.
 	db = mysql.createPool({
@@ -38,14 +49,16 @@ fs.readFile(__dirname + '/../config.json', {encoding: 'utf-8'}, function(err, da
 	db.on('connection', function(connection){
 		connection.query('SET NAMES UTF8', function(err, rows){ // Use UTF-8 encoding
 			if(err)
-				console.log('Could not set Database encoding as UTF-8 : ' + err);
+				console.warn('Could not set Database encoding as UTF-8 : ' + err);
 			connection.query('USE ' + config.db_name, function(err, rows){ // Use our database
 				if(err)
-					console.log('Could not use CPX Database : ' + err);
+					console.warn('Could not use CPX Database : ' + err);
 			}); 
 		});
 	});
 	
+	console.log('');
+	console.log(' * Checking database connectivity...');
 	// Let's see if the database works !
 	db.getConnection(function(err, connection){
 		if(err)
@@ -63,8 +76,26 @@ fs.readFile(__dirname + '/../config.json', {encoding: 'utf-8'}, function(err, da
 			if(rows[0].answer != 2)
 				throw 'The Database did not reply correctly to our test request.';
 			
-			// Time to start the Tracker!
+			console.log('It seems database is working! Launching tracker...');
+			// Time to start the tracker!
 			server.listen(config.tracker_port);
+			console.log('Everything shoud be OK now, have fun!');
+			
+			// Now that the connection is established, we must ensure it ends gracefully
+			process.on('SIGINT', function(){
+				console.log('');
+				console.log(' * Got interrupt signal, closing database connections...');
+				db.end(function(err){
+					if(err)
+						console.warn('Something went wrong trying to close database connections : ' + err);
+					else
+						console.info('Connections closed!');
+					console.info('');
+					console.info('All done! Thank your for using CPX!');
+					// Now we can leave!
+					process.exit(0);
+				});
+			});
 		});
 	});
 });

@@ -10,7 +10,9 @@ var config, db;
 
 console.info(' *******************');
 console.info(' * Welcome to CPX! *');
-console.info(' *******************')
+console.info(' *******************');
+console.info('');
+console.info('This is the main server');
 console.info('');
 console.info(' * Loading Configuration...');
 
