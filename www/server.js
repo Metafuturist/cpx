@@ -3,6 +3,7 @@ var app = require('express')();
 var fs = require('fs');
 var swig = require('swig');
 var mysql = require('mysql');
+var crypto = require('crypto');
 
 var config, db; //Define these variables out of any function so that they are global and accessible by everyone
 
@@ -14,8 +15,9 @@ fs.readFile(__dirname + '/../config.json', {encoding: 'utf-8'}, function(err, da
 	
 	// Set a Database Connections Pool.
 	db = mysql.createPool({
-		connectionLimit : 100, // This is the maximum of connections to the MySQL server, set it!
+		connectionLimit : config.db_max_links,
 		host            : config.db_host,
+		port            : config.db_port,
 		user            : config.db_user,
 		password        : config.db_password
 	});
@@ -42,7 +44,7 @@ fs.readFile(__dirname + '/../config.json', {encoding: 'utf-8'}, function(err, da
 			if(err)
 				throw 'Could not connect to the Database : ' + err;
 			
-			// You must use this everytime you're done with a connection so that other can use it!
+			// You must use this everytime you're done with a connection so that others can use it!
 			connection.release();
 			
 			// Checking if the server replied correctly
@@ -50,7 +52,7 @@ fs.readFile(__dirname + '/../config.json', {encoding: 'utf-8'}, function(err, da
 				throw 'The Database did not reply correctly to our test request.';
 			
 			// Time to start the WebServer!
-			app.listen(8000);
+			app.listen(config.www_port);
 		});
 	});
 });
@@ -77,6 +79,18 @@ app.get('/', function(req, res){
 	});
 });
 
+// Giving a reply in case of 404
 app.use(function(req, res){
-	res.send(404, 'Page not found'); // This should be modified so that we have a cool webpage
+	res.send(404, 'Page not found'); // This should be changed so that we have a cool webpage
 });
+
+function hashpw(password){
+	var sha1 = crypto.createHash('sha1'); // I'll use SHA-1 to crypt the password. Know a better algorithm ? Let me know!
+	// We add the caracters as UTF-8, just in case...
+	sha1.update('à"èf@dçS2Gl=$é^', 'utf8'); // Salting passwords
+	sha1.update(password, 'utf8'); // Password to hash
+	sha1.update('$éd090éDF@é{~è&', 'utf8'); // I love salt!
+	// Return hexdecimal hash
+	return sha1.digest('hex');
+}
+console.log(hashpw('a').length);
