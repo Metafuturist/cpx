@@ -9,13 +9,14 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="48.000000px"
-   height="48.000000px"
+   width="100%"
+   height="100%"
    id="svg53383"
    sodipodi:version="0.32"
    inkscape:version="0.43+devel"
    sodipodi:docbase="/home/jimmac/src/cvs/tango-icon-theme/scalable/categories"
-   sodipodi:docname="applications-other.svg">
+   sodipodi:docname="applications-other.svg"
+   viewBox="0 0 48 48">
   <defs
      id="defs3">
     <linearGradient

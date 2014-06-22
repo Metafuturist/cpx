@@ -9,8 +9,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="48px"
-   height="48px"
+   width="100%"
+   height="100%"
    id="svg1306"
    sodipodi:version="0.32"
    inkscape:version="0.43+devel"
@@ -19,7 +19,8 @@
    inkscape:export-filename="/home/andreas/projekt/bild/tango/terminal4.png"
    inkscape:export-xdpi="240.00000"
    inkscape:export-ydpi="240.00000"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   viewBox="0 0 48 48">
   <defs
      id="defs1308">
     <linearGradient
