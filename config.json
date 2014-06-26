@@ -1,13 +1,16 @@
 {
-	"db_host"      : "127.0.0.1",
-	"db_port"      : "3306",
-	"db_user"      : "cpx",
-	"db_password"  : "cpx",
-	"db_name"      : "cpx",
-	"db_max_links" : 100,
-	"static_host"  : "static.cpx.cx",
-	"tracker_host" : "tracker.cpx.cx",
-	"tracker_port" : 5050,
-	"www_host"     : "www.cpx.cx",
-	"www_port"     : 8000
+	"db":
+	{
+		"host"          : "127.0.0.1",
+		"port"          : 27017,
+		"name"          : "cpx",
+		"auth_required" : false,
+		"user"          : "cpx",
+		"password"      : "cpx"
+	},
+	"static_url"    : "http://static.cpx.cx/",
+	"tracker_host"  : "tracker.cpx.cx",
+	"tracker_port"  : 5050,
+	"www_host"      : "www.cpx.cx",
+	"www_port"      : 3000
 }

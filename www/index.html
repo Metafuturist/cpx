@@ -1,0 +1,65 @@
+<head>
+	<title>CPX - Login</title>
+	<meta charset="utf-8" />
+	<!-- As we don't really know where to look for these files, but can't use any function, we'll change it as soon as we can use functions : in the body. Meanwhile, we point to a meaningless address -->
+	<!--<link rel="icon" type="image/x-icon" href="https://0.0.0.0/favicon.ico" />-->
+	<!--<link rel="stylesheet" href="https://0.0.0.0/style.css" />-->
+	<meta name="viewport" content="width=device-width" />
+	<!-- TODO : Improve SEO -->
+</head>
+<template name="layout">
+{{! We need first to load some information, so let's wait a bit! }}
+{{#if static_host}}
+{{! First thing to do : change some includes in the page as Meteor doesn't change anything in header}}
+<script type="text/javascript">
+	document.head.innerHTML = document.head.innerHTML.replace(/\x3C!--(.+?)https:\/\/0.0.0.0\/(.+?)--\x3E/g, "$1{{static_host}}$2");
+</script>
+<div id="loading">&nbsp;</div>
+<div id="login"><!-- That's our login screen that is displayed when the user arrives -->
+	{{> login}}
+</div>
+<div id="content"><!-- Here is our content, once the user has logged in... -->
+	<div>
+		{{> yield}}
+	</div>
+</div>
+{{else}}
+<h1>One moment, {{random_loading}}...</h1>
+{{/if}}
+</template>
+<template name="login">
+<img class="logo" src="{{static_host}}logo.svg" alt="cpx.cx" />
+<div class="mainblock login">
+	<div class="login">
+		<div>
+			<form action="#" method="post">
+				<h1>{{i18n "login.title"}}</h1>
+				<input type="text" name="username" placeholder="{{i18n "login.user"}}" required />
+				<input type="password" name="password" placeholder="{{i18n "login.pass"}}" required />
+				<input type="submit" value="{{i18n "login.title"}}"/>
+				<span class="register">{{i18n "login.links.regintro"}} <a href="#register">{{i18n "login.links.reg"}}</a></span>
+			</form>
+		</div>
+	</div>
+	<div class="register">
+		<div>
+			<form action="#" method="post">
+				<h1>{{i18n "login.reg"}}</h1>
+				<input type="text" name="username" placeholder="{{i18n "login.user"}}" />
+				<input type="password" name="password" placeholder="{{i18n "login.pass"}}" />
+				<input type="password" name="password2" placeholder="{{i18n "login.pass2"}}" />
+				<input type="email" name="email" placeholder="{{i18n "login.email"}}" />
+				<input type="submit" value="{{i18n "login.reg"}}"/>
+				<span class="register">{{i18n "login.links.loginintro"}} <a href="#login">{{i18n "login.links.login"}}</a></span>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="about">
+	{{i18n "credits"}}
+</div>
+</template>
+
+<template name="home">
+<h1>One moment, {{random_loading}}...</h1>
+</template>

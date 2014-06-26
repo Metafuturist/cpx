@@ -1,0 +1,297 @@
+html{
+	font-family:'Arial';
+}
+body{
+	overflow:hidden;
+}
+/* Loading wheel */
+@keyframes rot{
+	from {
+		transform: rotate(0deg);
+	} to {
+		transform: rotate(360deg);
+	}
+}
+@-webkit-keyframes rot{
+	from {
+		-webkit-transform: rotate(0deg);
+	} to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+#loading{
+	position:fixed;
+	top:0;
+	right:0;
+	z-index:999999;
+	width:50px;
+	font-size:0;
+	opacity:0;
+	transition:visibility 0.1s, opacity 0.1s;
+	visibility:hidden;
+	height:50px;
+	border:1px solid rgba(255,255,255,0.9);
+	border-width:0 0 1px 1px;
+	border-radius:0 0 0 20%;
+	background-color:rgba(255,255,255,0.8);
+	box-shadow:0 0 10px white;
+}
+#loading:before{
+	content:'';
+	display:block;
+	background-image:url('loading.svg');
+	background-position:center center;
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+	position:absolute;
+	top:5%;
+	left:5%;
+	width:90%;
+	/* Let's make it turn - Works even with IE 10 ! */
+	height:90%;
+	animation:rot 1s linear infinite;
+	transform-origin:center center;
+	-webkit-animation:rot 1s linear infinite;
+	-webkit-transform-origin:center center;
+}
+#loading.active{
+	opacity:1;
+	visibility:visible;
+	transition-delay:0s, 0.1s; /* So that the visibility is directly changed */
+}
+/* Login screen */
+/* FIXME If the user zooms in then zooms out, things get messy. */
+#login{
+	position:absolute;
+	top:0;
+	left:0;
+	height:100%;
+	width:100%;
+	background:radial-gradient(ellipse at 50% 0, #888, #222) fixed no-repeat;
+	text-align:center;
+	transition:visibility 1s, top 1s, border-bottom-width 0s;
+	border-bottom:0 solid gray;
+	box-shadow:0 5px 10px rgba(0,0,0,0.5);
+	color:white;
+	overflow:hidden;
+	visibility:visible;
+	z-index:2;
+}
+/* Positionning the logo */
+#login > img.logo{
+	position:absolute;
+	top:1%;
+	left:0;
+	right:0;
+	margin:auto;
+	height:18%;
+	font-size:5em;
+	text-shadow:0 5px 5px rgba(0,0,0,0.5);
+	font-weight:bold;
+	text-transform:uppercase;
+	vertical-align:middle;
+}
+/* Time to talk about intersting stuff! */
+#login > div.mainblock{
+	position:absolute;
+	top:20%;
+	left:0;
+	right:0;
+	bottom:50px;
+	width:100%;
+	height:calc(80% - 50px);
+}
+/* Basically, we have to do this so that our content is centered but also to have a swaggy animation between them */
+#login > div.mainblock > div{
+	display:table;
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	height:100%;
+	width:100%;
+	z-index:1;
+}
+#login > div.mainblock > div > div{
+	display:table-cell;
+	vertical-align:middle;
+}
+#login > div.mainblock > div > div > form{
+	background:#ddd;
+	border:1px solid #333;
+	display:inline-block;
+	padding:10px;
+	color:#222;
+	box-shadow: 0 0 20px rgba(0,0,0,0.25);
+	vertical-align:middle;
+	font-size:16px;
+}
+/* Title */
+#login div h1{
+	margin:0;
+	text-shadow:1px 1px 1px white;
+	padding-bottom:10px;
+}
+/* Finally, about us */
+#login .about div{
+	vertical-align:bottom;
+	margin:1% 0;
+}
+/* About transitions on the login screen */
+#login div.mainblock > div{
+	transition:left 0.5s, opacity 0.5s;
+}
+#login div.login div.login{
+	opacity:1;
+	z-index:2;
+}
+#login div.login div.register{
+	left:100%;
+	opacity:0;
+}
+#login div.register div.login{
+	left:-100%;
+	opacity:0;
+}
+#login div.register div.register{
+	opacity:1;
+	z-index:2;
+}
+/* Login screen form management */
+#login div h1:after, #login div span.register:before{
+	display:block;
+	margin-top:5px;
+	height:1px;
+	background:linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0));
+	content:'';
+}
+/* Error container */
+#login div .error{
+	margin-bottom:10px;
+	color:white;
+	border:1px solid #BB3232;
+	text-shadow:0 -1px 0 rgba(0,0,0,0.5);
+	padding:5px 5px 5px 30px;
+	min-height:20px;
+	line-height:20px;
+	background:url('error.svg') 5px 50% no-repeat, linear-gradient(to bottom, #F06B6B, #B65858);
+	background-size:20px 20px, 100% 100%;
+	box-shadow:0 0 2px white inset;
+	border-radius:5px;
+}
+/* Link at the bottom of the login box */
+#login div span.register:before{
+	margin:0 0 5px 0;
+}
+#login div span.register{
+	display:block;
+}
+#login div span.register a{
+	color:#03499E;
+	font-weight:bold;
+	text-decoration:none;
+	text-shadow:0 1px 0 white;
+}
+#login div span.register a:hover{
+	color:#053A7C;
+}
+/* Form inputs style */
+#login div input:not([type="submit"]){
+	display:block;
+	height:2em;
+	padding:5px 5px 5px 35px;
+	width:calc(100% - 40px);
+	border-radius:5px;
+	border:1px solid #aaa;
+	margin:0 auto 5px; /* The auto margin is to make sure shitty browsers like Opera keep the page swaggy */
+	background-color:#f2f2f2;
+	background-image:url('user.svg');
+	background-position:5px 5px;
+	background-size:25px 25px;
+	background-repeat:no-repeat;
+	height:25px;
+	line-height:25px;
+	box-shadow:inset 0 2px 5px rgba(0,0,0,0.2);
+	transition:0.5s border-color, 0.5s background-color, 0.5s box-shadow;
+}
+#login div input[type="password"]{
+	background-image:url('password.svg');
+}
+#login div input[type="email"]{
+	background-image:url('email.svg');
+}
+#login div input:not([type="submit"]):focus{
+	border:1px solid #55f;
+	background-color:#fafafa;
+	box-shadow:inset 0 0 5px rgba(0,0,0,0.3);
+}
+#login div input:not([type="submit"]):disabled{
+	background-color:#ccc;
+	color:#555;
+}
+#login div input[type="submit"]{
+	display:block;
+	width:50%;
+	margin:10px auto;
+	height:37px;
+	border-radius:5px;
+	border:1px solid;
+	/* border-color:#1C5477; BLUE */
+	border-color:#2D6802;
+	/*background:linear-gradient(to bottom, #127DC5, #095787); BLUE */
+	background:linear-gradient(to bottom, #38C411, #328608);
+	padding:5px;
+	font-weight:bold;
+	font-size:20px;
+	box-shadow:inset 0 0 0 1px rgba(255,255,255,0.5);
+	/*color:#A9C8F3; BLUE */
+	color:#9F9;
+	text-shadow:0 -1px 0 rgba(0,0,0,0.5);
+	transition:color 0.5s;
+}
+#login div input[type="submit"]:hover{
+	color:white;
+	cursor:pointer;
+}
+#login div input[type="submit"]:active{
+	/* background:linear-gradient(to top, #127DC5, #095787); BLUE */
+	background:linear-gradient(to top, #38C411, #328608);
+}
+#login div input[type="submit"]:disabled{
+	background:linear-gradient(to bottom, #ccc, #aaa) !important;
+	border-color:#999 !important;
+	color:#e5e5e5 !important;
+	cursor:default !important;
+}
+/* The about text */
+#login > div.about{
+	position:absolute;
+	left:0;
+	right:0;
+	width:100%;
+	bottom:0;
+	padding-bottom:20px;
+	height:20px;
+	text-shadow:0 1px 1px black;
+}
+/* Once the user is connected, hide the login screen */
+body.connected #login{
+	top:-110%;
+	transition-duration:0s 1s 1s;
+	visibility:hidden;
+	border-bottom-width:1px;
+}
+/* Now, let's talk about the content! */
+#content{
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	width:100%;
+	height:100%;
+	z-index:1;
+	overflow-y:auto;
+	overflow-x:hidden;
+	background:radial-gradient(circle at top left, gray, lightgray) fixed no-repeat;
+}
