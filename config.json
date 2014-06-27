@@ -11,6 +11,6 @@
 	"static_url"    : "http://static.cpx.cx/",
 	"tracker_host"  : "tracker.cpx.cx",
 	"tracker_port"  : 5050,
-	"www_host"      : "www.cpx.cx",
+	"www_name"      : "CPX",
 	"www_port"      : 3000
 }

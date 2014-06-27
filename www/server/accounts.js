@@ -12,10 +12,12 @@ if (Meteor.isServer) {
 		user.emails.forEach(function(data){
 			if(!/.+@.+\.[a-z]{2,3}/.test(data.address))
 				throw new Meteor.Error(403, 'login.error.invalidmail');
+			if(Meteor.users.find({emails: {$elemMatch: {address: data.address}}}).count() > 0)
+				throw new Meteor.Error(403, 'login.error.mailtaken');
 		});
 		if(Meteor.users.find().count() > 42) //FIXME Read the max users value from the config!
 			throw new Meteor.Error(403, 'login.error.toomanyusers');
-		if(Meteor.users.find().count() > 0)
+		if(Meteor.users.find({username: user.username}).count() > 0)
 			throw new Meteor.Error(403, 'login.error.usertaken');
 		return true;
 	});
@@ -23,7 +25,7 @@ if (Meteor.isServer) {
 		//I think we can safely initialise the ratio!
 		user.upload = 4096; //FIXME Set this value from the configuration and see how the tracker is going to update it!
 		user.download = 0; //0 Bytes
-		user.avatar = Meteor.call('getStaticHost') + 'avatar.php?name=' + user.username;
+		user.avatar = Meteor.call('getConfig').static_host + 'avatar.php?name=' + user.username;
 		return user;
 	});
 }

@@ -15,7 +15,8 @@ i18n.map('fr', {
 			invalidmail     : "Votre adresse e-mail est erronée!",
 			toomanyusers    : "Désolé, nous sommes déjà complets!",
 			differentpasses : "Les deux mots de passe sont différents!",
-			usertaken       : "Ce nom d'utilistateur est déjà pris!"
+			usertaken       : "Ce nom d'utilistateur est déjà pris!",
+			mailtaken       : "Cette adresse e-mail est déjà prise!"
 		},
 		links : {
 			regintro   : "Pas encore de compte?",
@@ -23,6 +24,21 @@ i18n.map('fr', {
 			loginintro : "Vous avez déjà un compte?",
 			login      : "Connectez-vous!"
 		}
+	},
+	loading : {
+		prepend   : "Un instant, ",
+		length    : "7",
+		_comment  : "length  = number of sentences",
+		sentences : [
+			"Equilibrage de Katarina",
+			"Espionnage de la NSA",
+			"Hack du FBI",
+			"Ecriture d'un script en Brainfuck",
+			"Benchmarking de la base de données",
+			"Recherche de failles dans le système du ratio",
+			"Vérification de la somme MD-5 de 'a'",
+			"Invention d'un nouvel algorithme révolutionnaire..."
+		]
 	},
 	credits : 'Encore un site génial utilisant le projet CPX!'
 });

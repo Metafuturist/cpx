@@ -15,7 +15,8 @@ i18n.map('en', {
 			invalidmail     : "You typed a wrong e-mail address!",
 			toomanyusers    : "Sorry, we're already full!",
 			differentpasses : "Passwords must match!",
-			usertaken       : "This Username is already taken!"
+			usertaken       : "This Username is already taken!",
+			mailtaken       : "This e-mail address is already taken!"
 		},
 		links : {
 			regintro   : "Don't have an account?",
@@ -23,6 +24,22 @@ i18n.map('en', {
 			loginintro : "Already have an account?",
 			login      : "Log In!"
 		}
+	},
+	loading : {
+		prepend   : "Un instant, ",
+		length    : "7",
+		_comment  : "length  = number of sentences",
+		sentences :
+		[
+			"Balancing Katarina",
+			"Spying the NSA",
+			"Hackink the FBI",
+			"Writing a Brainfuck script",
+			"Benchmarking the database",
+			"Looking for breaches in the ratio system",
+			"Checking the MD-5 sum of 'a'",
+			"Inventing a revolutionary algorithm..."
+		]
 	},
 	credits : "Another great website powered by the CPX project!"
 });
