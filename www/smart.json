@@ -1,6 +1,7 @@
 {
   "packages": {
     "iron-router-auth": {},
-    "just-i18n": {}
+    "just-i18n": {},
+    "fast-render": {}
   }
 }

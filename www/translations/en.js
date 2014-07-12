@@ -25,6 +25,25 @@ i18n.map('en', {
 			login      : "Log In!"
 		}
 	},
+	torrents : {
+		name     : "Torrents",
+		home     : "Last added",
+		search   : {
+			text : "Search torrents..."
+		},
+		best     : "Most Downloaded",
+		random   : "Random",
+		upload   : "Upload",
+		groups   : "Groups",
+		requests : {
+			name   : "Requests",
+			search : {
+				text : "Search Requests..."
+			}
+		},
+		autoget  : "AutoGet",
+		logs     : "Logs"
+	},
 	loading : {
 		prepend   : "Un instant, ",
 		length    : "7",

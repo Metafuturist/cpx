@@ -1,10 +1,25 @@
+/* A file from the CPX Project */
+/*****************
+ * GENERAL STUFF *
+ *****************/
+@font-face { /* Load FontAwesome */
+	font-family: 'FontAwesome';
+	src: url('../fonts/fontawesome-webfont.eot?v=4.1.0');
+	src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.1.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.1.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 html{
 	font-family:'Arial';
 }
 body{
 	overflow:hidden;
+	font-size:16px;
+	color:black;
 }
-/* Loading wheel */
+/*****************
+ * LOADING WHEEL *
+ *****************/
 @keyframes rot{
 	from {
 		transform: rotate(0deg);
@@ -25,30 +40,25 @@ body{
 	right:0;
 	z-index:999999;
 	width:50px;
-	font-size:0;
-	opacity:0;
-	transition:visibility 0.1s, opacity 0.1s;
-	visibility:hidden;
 	height:50px;
+	font-size:40px;
+	line-height:50px;
 	border:1px solid rgba(255,255,255,0.9);
 	border-width:0 0 1px 1px;
-	border-radius:0 0 0 20%;
+	border-radius:0 0 0 10px;
 	background-color:rgba(255,255,255,0.8);
 	box-shadow:0 0 10px white;
+	opacity:0;
+	visibility:hidden;
+	transition:visibility 0.1s, opacity 0.1s;
 }
 #loading:before{
-	content:'';
+	font-family: FontAwesome;
+	content:'\f021';
+	text-align:center;
+	color:#22d;
 	display:block;
-	background-image:url('loading.svg');
-	background-position:center center;
-	background-repeat:no-repeat;
-	background-size:100% 100%;
-	position:absolute;
-	top:5%;
-	left:5%;
-	width:90%;
 	/* Let's make it turn - Works even with IE 10 ! */
-	height:90%;
 	animation:rot 1s linear infinite;
 	transform-origin:center center;
 	-webkit-animation:rot 1s linear infinite;
@@ -59,7 +69,9 @@ body{
 	visibility:visible;
 	transition-delay:0s, 0.1s; /* So that the visibility is directly changed */
 }
-/* Login screen */
+/*****************
+ * LOGIN SCREEN  *
+ *****************/
 /* FIXME If the user zooms in then zooms out, things get messy. */
 #login{
 	position:absolute;
@@ -116,6 +128,7 @@ body{
 	display:table-cell;
 	vertical-align:middle;
 }
+/* That's our blocks */
 #login > div.mainblock > div > div > form{
 	background:#ddd;
 	border:1px solid #333;
@@ -131,11 +144,6 @@ body{
 	margin:0;
 	text-shadow:1px 1px 1px white;
 	padding-bottom:10px;
-}
-/* Finally, about us */
-#login .about div{
-	vertical-align:bottom;
-	margin:1% 0;
 }
 /* About transitions on the login screen */
 #login div.mainblock > div{
@@ -174,18 +182,32 @@ body{
 	padding:5px 5px 5px 30px;
 	min-height:20px;
 	line-height:20px;
-	background:url('error.svg') 5px 50% no-repeat, linear-gradient(to bottom, #F06B6B, #B65858);
-	background-size:20px 20px, 100% 100%;
+	background:linear-gradient(to bottom, #F06B6B, #B65858);
+	background-size:100% 100%;
 	box-shadow:0 0 2px white inset;
 	border-radius:5px;
+	position:relative;
+}
+#login div .error:before{
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:5px;
+	font-family:FontAwesome;
+	content:'\f06a';
+	font-size:20px;
+	color:#ccc;
+	height:20px;
+	margin:auto;
 }
 /* Link at the bottom of the login box */
 #login div span.register:before{
-	margin:0 0 5px 0;
+	margin:0 0 5px 0; /* Little margin AFTER the separator */
 }
 #login div span.register{
-	display:block;
+	display:block; /* We'll use a line */
 }
+/* Link Style */
 #login div span.register a{
 	color:#03499E;
 	font-weight:bold;
@@ -205,7 +227,7 @@ body{
 	border:1px solid #aaa;
 	margin:0 auto 5px; /* The auto margin is to make sure shitty browsers like Opera keep the page swaggy */
 	background-color:#f2f2f2;
-	background-image:url('user.svg');
+	background-image:url('images/user.svg'); /* We /COULD/ use FontAwesome, but it is easier to use a background as the input item doesn't support :before */
 	background-position:5px 5px;
 	background-size:25px 25px;
 	background-repeat:no-repeat;
@@ -215,10 +237,10 @@ body{
 	transition:0.5s border-color, 0.5s background-color, 0.5s box-shadow;
 }
 #login div input[type="password"]{
-	background-image:url('password.svg');
+	background-image:url('images/password.svg');
 }
 #login div input[type="email"]{
-	background-image:url('email.svg');
+	background-image:url('images/email.svg');
 }
 #login div input:not([type="submit"]):focus{
 	border:1px solid #55f;
@@ -263,7 +285,7 @@ body{
 	color:#e5e5e5 !important;
 	cursor:default !important;
 }
-/* The about text */
+/* About us... */
 #login > div.about{
 	position:absolute;
 	left:0;
@@ -281,7 +303,9 @@ body.connected #login{
 	visibility:hidden;
 	border-bottom-width:1px;
 }
-/* Now, let's talk about the content! */
+/*****************
+ *    CONTENT    *
+ *****************/
 #content{
 	position:absolute;
 	top:0;
@@ -293,5 +317,334 @@ body.connected #login{
 	z-index:1;
 	overflow-y:auto;
 	overflow-x:hidden;
-	background:radial-gradient(circle at top left, gray, lightgray) fixed no-repeat;
+	background:radial-gradient(ellipse at center top, #ddd,#bbb);
+	background-size:100% 100%;
+	box-shadow:0 0 50px rgba(0,0,0,.1) inset;
+}
+/*****************
+ *    HEADER     *
+ *****************/
+#header{
+	height:130px;
+	margin:10px 5%;
+}
+/* Logo */
+#header > img{
+	float:left;
+	height:130px;
+	margin-left:25px;
+}
+/* The user stuff */
+#header #userdata{
+	margin-left:200px;
+	height:100px;
+	position:relative;
+	display:block;
+}
+#header #userdata > *{
+	display:inline-block; /* Everything in this block displays inline */
+	vertical-align:middle;
+}
+/* Avatar */
+#header #userdata img.avatar{
+	height:80%;
+	border:1px solid white;
+	box-shadow:0 0 10px black;
+	margin-right:1%;
+}
+/* Ratio, username, ... */
+#header #userdata div.text{
+	height:90px;
+	line-height:25px;
+	margin:5px;
+}
+#userdata div.text > a{ /* Username */
+	display:block;
+	line-height:40px;
+	height:40px;
+	font-size:30px;
+	font-weight:bold;
+}
+/*****************
+ *    CONTENT    *
+ *****************/
+#main{
+	margin:0 5%;
+	position:relative;
+	background:rgba(255,255,255,0.6);
+	border:1px solid #333;
+	border-radius: 10px 0 10px 10px;
+}
+/***** Menu Tabs *****/
+#main #tabs{
+	position:absolute;
+	top:-30px;
+	list-style:none;
+	display:block;
+	right:-1px; /* Take in account the border */
+	padding:0;
+	margin:0;
+	text-align:right; /* Align the tabs on the right, please */
+	left:160px;
+	font-size:0;
+}
+#tabs ul{
+	padding:0;
+	margin:0;
+}
+#tabs li{
+	display:inline-block;
+}
+/* Menu header */
+#tabs > li{
+	text-align:left;
+	font-size:16px;
+	border:1px solid #333;
+	line-height:28px;
+	margin-left:10px;
+	height:28px;
+	width:148px;
+	border-radius:10px 10px 0 0;
+	background:linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+	background-color:#f22;
+}
+#tabs > li > span{
+	font-size:22px;
+	font-weight:bold;
+	text-align:center;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+	display:block;
+	z-index:2;
+	position:relative; /* For the background to position correctly */
+}
+/* The background, which is behind the text */
+#tabs > li > span:before{
+	background:url('images/torrent.svg') top center no-repeat;
+	background-size:70px 70px;
+	position:absolute;
+	top:5px;
+	left:0;
+	right:0;
+	height:23px;
+	z-index:-1;
+	content:'';
+	display:block;
+	opacity:0.5; /* So that it looks better - too bad background-opacity doesn't exist */
+}
+/* If the tab is selected */
+#tabs > li.selected{
+	border-bottom:0 none;
+	padding-bottom:1px;
+}
+/* So that tabs have different colors for each tab */
+#tabs > li:nth-child(2){
+	background-color:#cc0;
+}
+#tabs > li:nth-child(3){
+	background-color:#2a2;
+}
+#tabs > li:nth-child(4){
+	background-color:#44f;
+}
+/* So that each tab has its own background */
+#tabs > li:nth-child(2) > span:before{
+	background-image:url('images/community.svg');
+}
+#tabs > li:nth-child(3) > span:before{
+	background-image:url('images/help.svg');;
+}
+#tabs > li:nth-child(4) > span:before{
+	background-image:url('images/account.svg');;
+}
+/***** Submenu *****/
+#tabs > li > ul{
+	position:absolute;
+	left:-160px;
+	background:linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.2)) #f22;
+	top:30px;
+	right:1px;
+	border-top-left-radius:9px;
+	height:30px;
+	display:none;
+	border-bottom:1px solid #333;
+	line-height:30px;
+	padding:0 20px;
+	font-size:0;
+}
+/* Display the submenu if the header is selected */
+#tabs > li.selected > ul{
+	display:block;
+}
+/* Background is back */
+#tabs > li > ul:before{
+	z-index:1;
+	content:'';
+	background:url('images/torrent.svg') center -23px no-repeat;
+	background-size:70px 70px;
+	display:block;
+	position:absolute;
+	right:480px;
+	width:148px;
+	top:-1px; /* For the 1px margin, not covered by the background of the header (to avoid changing the border color) */
+	height:31px;
+	opacity:0.5;
+}
+/* Make it different for each tab */
+#tabs > li:nth-child(2) > ul:before{
+	background-image:url('images/community.svg');
+}
+#tabs > li:nth-child(3) > ul:before{
+	background-image:url('images/help.svg');;
+}
+#tabs > li:nth-child(4) > ul:before{
+	background-image:url('images/account.svg');;
+}
+/* Little shadow */
+#tabs > li > ul:after{
+	position:absolute;
+	bottom:-10px;
+	height:10px;
+	content:'';
+	background:linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0));
+	width:100%;
+	left:0;
+}
+/* Backgrounds for each item */
+#tabs > li:nth-child(2) > ul{
+	background-color:#cc0;
+}
+#tabs > li:nth-child(2) > ul:before{
+	right:320px;
+}
+#tabs > li:nth-child(3) > ul{
+	background-color:#2a2;
+}
+#tabs > li:nth-child(3) > ul:before{
+	right:160px;
+}
+#tabs > li:nth-child(4) > ul{
+	background-color:#44f;
+}
+#tabs > li:nth-child(4) > ul:before{
+	right:0;
+}
+/***** Menu elements *****/
+#tabs > li > ul > li.content{
+	z-index:2;
+	position:relative; /* Ensures the z-index is taken in account, so that the background is under the elements */
+	color:white;
+	position:absolute;
+	left:21px;
+	right:21px;
+	top:0;
+	bottom:0;
+	overflow:hidden;
+	white-space:nowrap;
+	text-align:center;
+}
+/*** Sliders ***/
+#tabs ul li.left{
+	position:absolute;
+	left:0;
+	border-right:1px solid black;
+	border-top-left-radius:8px;
+}
+#tabs ul li.right{
+	right:0;
+	border-left:1px solid black;
+}
+#tabs ul li.left, #tabs ul li.right{
+	margin:0;
+	position:absolute;
+	top:0;
+	width:20px;
+	background-color:rgba(0,0,0,0.6);
+	opacity:0.5;
+	transition:opacity .5s;
+	height:30px;
+	font-size:20px;
+	text-shadow:0 1px 0 white;
+	text-align:center;
+	color:white;
+	font-family:FontAwesome;
+}
+#tabs ul li.left:hover, #tabs ul li.right:hover{
+	cursor:pointer;
+	opacity:1;
+}
+/* Content of the menus */
+#tabs > li > ul > li > ul > li{
+	text-shadow:0 1px 2px black;
+	font-weight:bold;
+	text-transform:uppercase;
+	margin:0 10px;
+	font-size:16px;
+	position:relative;
+	height:30px;
+}
+/*** Links ***/
+#tabs ul li a{
+	opacity:0.6;
+	transition:opacity .5s;
+}
+#tabs ul li a:hover{
+	opacity:1;
+	cursor:pointer;
+}
+/*** Search Inputs ***/
+#tabs ul li form{
+	font-size:0;
+	height:20px;
+	margin:5px 0;
+	position:relative;
+	top:-1px;
+}
+#tabs ul li input[type="text"]{
+	border:1px solid rgba(255,255,255,0.5);
+	height:18px;
+	font-size:12px;
+	padding:0;
+	text-indent:3px;
+	border-radius:5px 0 0 5px;
+	background:rgba(255,255,255,0.5);
+	box-shadow:0 1px 3px rgba(0,0,0,0.5)inset;
+	width:100px;
+	transition:all 0.5s;
+}
+#tabs ul li input[type="text"]:focus{
+	background:rgba(255,255,255,0.8);
+	width:150px;
+	box-shadow:0 0 3px rgba(0,0,0,0.5)inset;
+	border-color:white;
+}
+#tabs ul li input[type="submit"]{
+	padding:0;
+	height:20px; /* Borders are taken in the height here. Weird, indeed. */
+	border:0;
+	width:20px;
+	margin:0;
+	font-size:0;
+	vertical-align:top;
+	border:1px solid white;
+	border-left:0 none;
+	border-radius:0 5px 5px 0;
+	opacity:0.7;
+	transition:all 0.5s;
+	font-size:14px;
+	font-family:FontAwesome;
+}
+#tabs ul li input[type="submit"]:hover{
+	opacity:1;
+	cursor:pointer;
+}
+/*****************
+ * REAL CONTENT  *
+ *****************/
+#main #page{
+	padding:30px 0 0;
+}
+#main #shadow{
+	padding:10px;
+	box-shadow:0 0 10px rgba(0,0,0,0.2) inset;
+	border-radius:0 0 10px 10px;
 }

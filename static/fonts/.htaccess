@@ -1,0 +1,2 @@
+# Enable CORS so that FontAwesome is loaded correctly
+Header set Access-Control-Allow-Origin "*"

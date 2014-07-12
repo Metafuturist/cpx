@@ -1,5 +1,9 @@
-// This routine will run BOTH on server and client!
 if(Meteor.isClient){
+	// Is the user connected when page loads?
+	Meteor.startup(function(){
+		if(Meteor.user())
+			$('body').addClass('connected'); //If that's the case, let's show him the content
+	});
 	// Events when the user clicks on the link
 	Template.login.events({
 		'click form > span a': function(event){
@@ -61,6 +65,8 @@ if(Meteor.isClient){
 				form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.tooshortpass')));
 			else if (pass != pass2)
 				form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.differentpasses')));
+			else if (!(/[a-z0-9_\-\\\/]+@[a-z0-9]+\.[a-z]+/i.test(email)))
+				form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.invalidmail')));
 			else{
 				form.find('input[type="password"]').val(''); //Clear the passwords!
 				Accounts.createUser({

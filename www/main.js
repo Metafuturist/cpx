@@ -19,9 +19,10 @@ if (Meteor.isClient){
 	UI.registerHelper('www_name', function(){
 		return Session.get('www_name');
 	});
-	UI.registerHelper('loading', function(){
+	UI.registerHelper('loading', function(){ //Get a random loading phrase ID
 		return "loading.sentences." + Math.floor(Random.fraction()*parseInt(i18n("loading.length")));
 	});
+	//Basic router configuration
 	Router.configure({
 		layoutTemplate   : 'layout',
 		notFoundTemplate : 'home',

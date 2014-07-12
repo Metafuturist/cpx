@@ -25,6 +25,51 @@ i18n.map('fr', {
 			login      : "Connectez-vous!"
 		}
 	},
+	torrents : {
+		name     : "Torrents",
+		home     : "Plus récents",
+		search   : {
+			text : "Rechercher un torrent..."
+		},
+		best     : "Plus téléchargés",
+		random   : "Au hasard",
+		upload   : "Ajouter",
+		groups   : "Groupes",
+		requests : {
+			name   : "Requêtes",
+			search : {
+				text : "Rechercher une requête..."
+			}
+		},
+		autoget  : "AutoGet",
+		logs     : "Logs"
+	},
+	community : {
+		name : "Communauté",
+		forum : {
+			name : "Forum",
+			search : {
+				text : "Rechercher un message..."
+			},
+			myposts : "Mes messages",
+		},
+		blog : {
+			name : "Blog"
+		},
+		imagehost : "Hébergeur d'images",
+		polls : {
+			name : "Sondages"
+		},
+		donations : "Dons",
+		users : {
+			search : {
+				text : "Rechercher un utilisateur..."
+			}
+		},
+		messages : {
+			name : "Messagerie"
+		}
+	},
 	loading : {
 		prepend   : "Un instant, ",
 		length    : "7",

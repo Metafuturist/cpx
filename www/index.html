@@ -15,18 +15,156 @@
 <div id="login"><!-- That's our login screen that is displayed when the user arrives -->
 	{{> login}}
 </div>
+{{#if currentUser}}
 <div id="content"><!-- Here is our content, once the user has logged in... -->
-	<div>
-		{{> yield}}
+	<div id="header">
+		<img src="{{static_host}}images/logo.svg" alt="Logo" />
+		<div id="userdata">
+			<img class="avatar" src="{{static_host}}images/avatar.php?name=username" />
+			<div class="text">
+				<a>Username</a>
+				Up : 42 Go / Down : 20 Go / Ratio : ~2<br />
+				Bonus points : 42 (per hour : 15)<br />
+			</div>
+		</div>
+	</div>
+	<div id="main">
+		<ul id="tabs">
+			<li class="selected">
+				<span>{{i18n "torrents.name"}}</span>
+				<ul>
+					<li class="left">&#xf053;</li>
+					<li class="content">
+						<ul>
+							<li><a>{{i18n "torrents.home"}}</a></li>
+							<li><form>
+								<input type="text" placeholder="{{i18n "torrents.search.text"}}"/>
+								<input type="submit" value="&#xf002;" />
+							</form></li>
+							<li><a>{{i18n "torrents.best"}}</a></li>
+							<li><a>{{i18n "torrents.random"}}</a></li>
+							<li><a>{{i18n "torrents.upload"}}</a></li>
+							<li><a>{{i18n "torrents.groups"}}</a></li>
+							<li><a>{{i18n "torrents.requests.name"}}</a></li>
+							<li><form>
+								<input type="text" placeholder="{{i18n "torrents.requests.search.text"}}"/>
+								<input type="submit" value="&#xf002;" />
+							</form></li>
+							<li><a>{{i18n "torrents.autoget"}}</a></li>
+							<li><a>{{i18n "torrents.logs"}}</a></li>
+						</ul>
+					</li>
+					<li class="right">&#xf054;</li>
+				</ul>
+			</li>
+			<li>
+				<span>{{i18n "community.name"}}</span>
+				<ul>
+					<li class="left">&#xf053;</li>
+					<li class="content">
+						<ul>
+							<li><a>{{i18n "community.forum.name"}}</a></li>
+							<li><form>
+								<input type="text" placeholder="{{i18n "community.forum.search.text"}}"/>
+								<input type="submit" value="&#xf002;" />
+							</form></li>
+							<li><a>{{i18n "community.forum.myposts"}}</a></li>
+							<li><a>{{i18n "community.blog.name"}}</a></li>
+							<li><a>{{i18n "community.imagehost"}}</a></li>
+							<li><a>{{i18n "community.polls.name"}}</a></li>
+							<li><a>{{i18n "community.donations"}}</a></li>
+							<li><form>
+								<input type="text" placeholder="{{i18n "community.users.search.text"}}"/>
+								<input type="submit" value="&#xf002;" />
+							</form></li>
+							<li><a>{{i18n "community.messages.name"}}</a></li>
+						</ul>
+					</li>
+					<li class="right">&#xf054;</li>
+				</ul>
+			</li>
+			<li>
+				<span>Help</span>
+				<ul>
+					<li class="left">&#xf053;</li>
+					<li class="content">
+						<ul>
+							<li><a>Wiki</a></li>
+							<li><form>
+								<input type="text" placeholder="Search articles..."/>
+								<input type="submit" value="&#xf002;" />
+							</form></li>
+							<li><a>Staff</a></li>
+							<li><a>Rules</a></li>
+						</ul>
+					</li>
+					<li class="right">&#xf054;</li>
+				</ul>
+			</li>
+			<li>
+				<span>My account</span>
+				<ul>
+					<li class="left">&#xf053;</li>
+					<li class="content">
+						<ul>
+							<li><a>My profile</a></li>
+							<li><a>Favorites</a></li>
+							<li><a>My Pictures</a></li>
+							<li><a>Settings</a></li>
+							<li><a>Friends</a></li>
+							<li><a>Shop</a></li>
+							<li><a>Warns</a></li>
+						</ul>
+					</li>
+					<li class="right">&#xf054;</li>
+				</ul>
+			</li>
+		</ul>
+		<div id="page">
+			<div id="shadow">
+				{{> yield}}
+			</div>
+		</div>
+		<script>
+			$('#tabs > li').click(function(){
+				$('#tabs > li').removeClass('selected');
+				$(this).addClass('selected');
+			});
+			function slideLeft(){
+				slide(false);
+			}
+			function slideRight(){
+				slide(true);
+			}
+			function slide(right){
+				var item = $('#tabs .selected .content');
+				item.scrollLeft(item.scrollLeft() + 5*(right?1:-1))
+			}
+			$('#tabs li.left').mousedown(function(){
+				this.iid=setInterval(slideLeft, 25);
+			});
+			$('#tabs li.right').mousedown(function(){
+				this.iid=setInterval(slideRight, 25);
+			});
+			$('#tabs li.left, #tabs li.right').mouseup(function(){
+				this.iid && clearInterval(this.iid);
+			}).mouseleave(function(){
+				$(this).mouseup();
+			});
+			$(window).resize(function(){
+				console.log('stop that!');
+			});
+		</script>
 	</div>
 </div>
+{{/if}}
 {{else}}
 <h1>{{i18n "loading.prepend"}}{{i18n loading}}...</h1>
 {{/if}}
 </template>
 
 <template name="login">
-<img class="logo" src="{{static_host}}logo.svg" alt="{{www_name}}" />
+<img class="logo" src="{{static_host}}images/logo.svg" alt="{{www_name}}" />
 <div class="mainblock login">
 	<div class="login">
 		<div>
@@ -43,11 +181,11 @@
 		<div>
 			<form action="#" method="post">
 				<h1>{{i18n "login.reg"}}</h1>
-				<input type="text" name="username" placeholder="{{i18n "login.user"}}" />
-				<input type="password" name="password" placeholder="{{i18n "login.pass"}}" />
-				<input type="password" name="password2" placeholder="{{i18n "login.pass2"}}" />
-				<input type="email" name="email" placeholder="{{i18n "login.email"}}" />
-				<input type="submit" value="{{i18n "login.reg"}}"/>
+				<input type="text" name="username" placeholder="{{i18n "login.user"}}" required />
+				<input type="password" name="password" placeholder="{{i18n "login.pass"}}" required />
+				<input type="password" name="password2" placeholder="{{i18n "login.pass2"}}" required />
+				<input type="email" name="email" placeholder="{{i18n "login.email"}}" required />
+				<input type="submit" value="{{i18n "login.reg"}}" />
 				<span class="register">{{i18n "login.links.loginintro"}} <a href="#login">{{i18n "login.links.login"}}</a></span>
 			</form>
 		</div>
