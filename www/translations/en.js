@@ -44,8 +44,34 @@ i18n.map('en', {
 		autoget  : "AutoGet",
 		logs     : "Logs"
 	},
+	community : {
+		name : "Community",
+		forum : {
+			name : "Forum",
+			search : {
+				text : "Search a post..."
+			},
+			myposts : "My posts",
+		},
+		blog : {
+			name : "Blog"
+		},
+		imagehost : "Image Hoster",
+		polls : {
+			name : "Polls"
+		},
+		donations : "Donations",
+		users : {
+			search : {
+				text : "Search a user..."
+			}
+		},
+		messages : {
+			name : "inbox"
+		}
+	},
 	loading : {
-		prepend   : "Un instant, ",
+		prepend   : "One moment, ",
 		length    : "7",
 		_comment  : "length  = number of sentences",
 		sentences :

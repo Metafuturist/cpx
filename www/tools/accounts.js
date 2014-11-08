@@ -3,6 +3,8 @@ if(Meteor.isClient){
 	Meteor.startup(function(){
 		if(Meteor.user())
 			$('body').addClass('connected'); //If that's the case, let's show him the content
+		// Load the data related to the user...
+		Meteor.subscribe('userData', 'me');
 	});
 	// Events when the user clicks on the link
 	Template.login.events({
@@ -38,6 +40,7 @@ if(Meteor.isClient){
 						return $('#login > div > .login h1').after($('<div>').addClass('error').html(i18n('login.error.badlogin')));
 					//Everything is OK here, let's log in the user!
 					$('body').addClass('connected');
+					Meteor.subscribe('userData', 'me'); // Load the user's data while you're on it
 				});
 				return;
 			}
@@ -77,7 +80,8 @@ if(Meteor.isClient){
 					$('#login > div .register input').removeAttr('disabled');
 					if(err)
 						return $('#login > div .register h1').after($('<div>').addClass('error').html(i18n(err.reason)));
-					$('body').addClass('connected');
+					$('body').addClass('connected'); //So it's ok, let's connect say you're connected and load your data
+					Meteor.subscribe('userData', 'me');
 				});
 				return;
 			}

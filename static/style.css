@@ -624,7 +624,7 @@ body.connected #login{
 	width:20px;
 	margin:0;
 	font-size:0;
-	vertical-align:top;
+	vertical-align:sub; /* I don't really know what this value means, but it works so just let it that way */
 	border:1px solid white;
 	border-left:0 none;
 	border-radius:0 5px 5px 0;

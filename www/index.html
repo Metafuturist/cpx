@@ -20,11 +20,11 @@
 	<div id="header">
 		<img src="{{static_host}}images/logo.svg" alt="Logo" />
 		<div id="userdata">
-			<img class="avatar" src="{{static_host}}images/avatar.php?name=username" />
+			<img class="avatar" src="{{currentUser.avatar}}" />
 			<div class="text">
-				<a>Username</a>
-				Up : 42 Go / Down : 20 Go / Ratio : ~2<br />
-				Bonus points : 42 (per hour : 15)<br />
+				<a>{{currentUser.username}}</a>
+				Up : {{currentUser.upload}} Go / Down : {{currentUser.download}} Go / Ratio : {{divide}}<br />
+				Bonus points : 42 <span style="font-family:FontAwesome">&#xf20b;</span> (per hour : 15)<br />
 			</div>
 		</div>
 	</div>
@@ -152,7 +152,7 @@
 				$(this).mouseup();
 			});
 			$(window).resize(function(){
-				console.log('stop that!');
+				
 			});
 		</script>
 	</div>
