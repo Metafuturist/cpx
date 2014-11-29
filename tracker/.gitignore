@@ -1,0 +1,7 @@
+# Ignore everything, such as builds
+*
+
+# But keep the code and this file!
+!.gitignore
+!*.c
+!*.h
