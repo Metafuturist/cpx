@@ -101,11 +101,9 @@ int main(int argc, char* argv[]){
 	
 	// a - The request string
 	char *request=malloc(512); // Prepare the Buffer for the request data
-	memset(request, 0, 512);
 	
 	// b - Pointers to the interesting values
 	char *request_params[REQUEST_SIZE];
-	memset(request_params, 0, REQUEST_SIZE);
 	
 	// c - Data related to the processing of the request
 	char *request_char = request; // Pointer to the processed adress
@@ -125,6 +123,16 @@ int main(int argc, char* argv[]){
 	 ************************/
 	
 	while(stop == 0){ // While we're not asked to stop
+		/*****************************
+		 * Get ready for the request *
+		 *****************************/
+		
+		// Reset request buffers
+		memset(request, 0, 512);
+		memset(request_params, 0, REQUEST_SIZE);
+		
+		// Come back to the beginning of the request
+		request_char = request;
 		
 		/**********************
 		 * Wait for a request *
@@ -286,8 +294,8 @@ int main(int argc, char* argv[]){
 		printf(
 			COLOR_YELLOW "====== THE DATA OF THE REQUEST =======\n"
 			COLOR_BLUE "PASSKEY  : " COLOR_WHITE "%s\n"
-			COLOR_BLUE "UPLOAD   : " COLOR_RED "%s\n"
-			COLOR_BLUE "DOWNLOAD : " COLOR_GREEN "%s\n"
+			COLOR_BLUE "UPLOAD   : " COLOR_GREEN "%s\n"
+			COLOR_BLUE "DOWNLOAD : " COLOR_RED "%s\n"
 			COLOR_BLUE "PORT     : " COLOR_RESET "%s\n"
 			COLOR_BLUE "CLIENT   : " COLOR_MAGENTA "%s\n"
 			COLOR_BLUE "IP       : " COLOR_CYAN "%s\n"
@@ -323,14 +331,15 @@ int main(int argc, char* argv[]){
 		nextreq:
 		// Close the sockect
 		close(response_socket);
-		
-		// Reset request buffers
-		memset(request, 0, 512);
-		memset(request_params, 0, REQUEST_SIZE);
-		
-		// Come back to the beginning of the request
-		request_char = request;
+
 	}
-	close(sock); //That's all, folks!
+	/*********************
+	 * 4 - Graceful stop *
+	 *********************/
+
+	// Just close the socket, the system will take care of the memory
+	close(sock);
+	
+	// Say everyhing went fine
 	return 0;
 }
