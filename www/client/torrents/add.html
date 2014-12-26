@@ -1,0 +1,14 @@
+<template name="torrents_add">
+<div id="torrent_add">
+	<h1>Add a torrent</h1>
+	<form>
+		{{#if step 1}}
+		<div id="step1">
+			<h2>Step 1 : Select your file</h2>
+			<input type="file" name="file" required accept="application/x-bittorrent" />
+		</div>
+		{{/if}}
+		<button type="submit"><span>&#xf058;</span> Submit</button>
+	</form>
+</div>
+</template>

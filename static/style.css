@@ -1,4 +1,6 @@
-/* A file from the CPX Project */
+/*  A file from the CPX Project   */
+/* Licensed under the MIT License */
+@import url('torrents.css');
 /*****************
  * GENERAL STUFF *
  *****************/
@@ -317,16 +319,21 @@ body.connected #login{
 	z-index:1;
 	overflow-y:auto;
 	overflow-x:hidden;
-	background:radial-gradient(ellipse at center top, #ddd,#bbb);
-	background-size:100% 100%;
+	background:url('images/bg.svg') center center fixed;
+	background-size:cover;
 	box-shadow:0 0 50px rgba(0,0,0,.1) inset;
+}
+/* This is a container. It is very useful for the footer so that it is always at the bottom of the page */
+#content #container{
+	min-height:100%;
+	position:relative;
 }
 /*****************
  *    HEADER     *
  *****************/
 #header{
 	height:130px;
-	margin:10px 5%;
+	padding:10px 5%;
 }
 /* Logo */
 #header > img{
@@ -346,11 +353,13 @@ body.connected #login{
 	vertical-align:middle;
 }
 /* Avatar */
-#header #userdata img.avatar{
-	height:80%;
+#header #userdata .avatar{
+	height:80px;
+	max-width:80px;
 	border:1px solid white;
 	box-shadow:0 0 10px black;
 	margin-right:1%;
+	background:radial-gradient(ellipse at center center, #aaa, #666);
 }
 /* Ratio, username, ... */
 #header #userdata div.text{
@@ -364,6 +373,23 @@ body.connected #login{
 	height:40px;
 	font-size:30px;
 	font-weight:bold;
+}
+#userdata div.text span{ /* Everything such as upload, download, bonus points */
+	font-weight:bold;
+	text-shadow:0 1px 0 white;
+}
+#userdata div.text .upload{
+	color:#2B9B20;
+}
+#userdata div.text .download{
+	color:#FF1D1D;
+}
+#userdata div.text .ratio{
+	color:#FF5A00;
+}
+#userdata div.text .bonus:after{
+	content:' \f20b';
+	font-family:FontAwesome;
 }
 /*****************
  *    CONTENT    *
@@ -554,6 +580,7 @@ body.connected #login{
 	border-left:1px solid black;
 }
 #tabs ul li.left, #tabs ul li.right{
+	z-index:3;
 	margin:0;
 	position:absolute;
 	top:0;
@@ -572,6 +599,12 @@ body.connected #login{
 	cursor:pointer;
 	opacity:1;
 }
+/* If it's the lastest tab, the button gets displayed on the right, so we must add a top border */
+#tabs li:last-child ul li.right{
+	border-top:1px solid black;
+	top:-1px;
+	border-top-left-radius:5px;
+}
 /* Content of the menus */
 #tabs > li > ul > li > ul > li{
 	text-shadow:0 1px 2px black;
@@ -586,6 +619,8 @@ body.connected #login{
 #tabs ul li a{
 	opacity:0.6;
 	transition:opacity .5s;
+	color:white;
+	text-decoration:none;
 }
 #tabs ul li a:hover{
 	opacity:1;
@@ -645,6 +680,29 @@ body.connected #login{
 }
 #main #shadow{
 	padding:10px;
-	box-shadow:0 0 10px rgba(0,0,0,0.2) inset;
+	box-shadow:0 2px 10px rgba(0,0,0,0.2) inset;
 	border-radius:0 0 10px 10px;
+}
+/** About **/
+#content #about{
+	display:block;
+	border-top:1px solid white;
+	background:linear-gradient(to bottom, rgba(150,150,150,.5), rgba(255,255,255,.5));
+	font-size:12px;
+	color:#111;
+	padding:5px;
+	text-shadow:0 0 5px white;
+	text-align:center;
+	width:auto;
+	/* GET DOWN! */
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+}
+/* PlaceHolder */
+#content #container:after{
+	display:block;
+	height:36px;
+	content:'';
 }

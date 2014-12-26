@@ -1,0 +1,82 @@
+<template name="avatar">
+{{! Avatar template - It's better to load it once for all ! }}
+{{#unless user.avatar}}
+	{{! Make sure we have data to avoid exceptions in the callbacks}}
+	<img src="{{static_host}}images/loading.svg" alt="Loading..." class="avatar" />
+{{else}}
+	{{#if isUrl user.avatar}}
+		{{! The user set a custom avatar - Display it!}}
+		<img src="{{user.avatar}}" alt="Avatar" class="avatar" />
+	{{else}}
+		{{! The user didn't set a custom avatar -> Default avatar}}
+		<svg
+			xmlns:svg="http://www.w3.org/2000/svg"
+			xmlns="http://www.w3.org/2000/svg"
+			xmlns:xlink="http://www.w3.org/1999/xlink"
+			version="1.1"
+			viewBox="0 0 100 100"
+			style="background:#{{bgcolor user.avatar}}"
+			class="avatar">
+			<defs>
+				<radialGradient
+				id="bg_gradient"
+				cx="0.5"
+				cy="0.25"
+				fx="0.5"
+				fy="0.25"
+				r="50"
+				gradientUnits="userSpaceOnUse"
+				gradientTransform="matrix(3.13,3.14,-1.40,1.39,-0.72,-1.67)">
+					<stop style="stop-color:#ffffff;stop-opacity:1;" offset="0" />
+					<stop style="stop-color:#000000;stop-opacity:1;" offset="1" />
+				</radialGradient>
+				<filter
+					id="shadow"
+					width="1.5"
+					height="1.5"
+					x="-.25"
+					y="-.25">
+					<feGaussianBlur
+						in="SourceAlpha"
+						stdDeviation="5"
+						result="blur" />
+					<feColorMatrix
+						result="bluralpha"
+						type="matrix"
+						values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " />
+					<feOffset
+						in="bluralpha"
+						dx="0"
+						dy="0"
+						result="offsetBlur" />
+					<feMerge>
+						<feMergeNode in="offsetBlur" />
+						<feMergeNode in="SourceGraphic" />
+					</feMerge>
+				</filter>
+			</defs>
+			{{! The light effect on the background - so that it's not plain color}}
+			<rect style="fill:url(#bg_gradient); fill-opacity:1; stroke:none; opacity:0.4; fill-rule:nonzero"
+				width="100"
+				height="100"
+				x="0"
+				y="8.8245383e-015" />
+			<path
+			   transform="translate({{translate1 user.avatar}})"
+			   style="fill:#ffffff;fill-opacity:0.59;"
+			   d="m 69.18,947 c -15.2,-0.27 -30.25,6.31 -38.78,20.25 -9.72,15.88 -6.93,38.74 10.125,48.69 a 2.00,2.00 0 1 0 2,-3.47 c -14.90,-8.68 -17.37,-28.99 -8.72,-43.12 12.36,-20.19 40.15,-23.43 59.375,-11.19 14.23,9.10 23.05,25.28 24.03,42.16 a 2,2 0 1 0 3.97,-0.25 c -1.05,-18.09 -10.36,-35.43 -25.84,-45.28 -7.86,-5.01 -17.03,-7.62 -26.16,-7.78 z m -40.74,61.69 c -10.85,0.486 -21.07,9.29 -20.28,20.88 0.54,7.91 7.12,15.37 15.69,14.53 2.81,-0.274 5.44,-1.58 7.38,-3.59 1.93,-2.02 3.14,-4.86 2.72,-7.97 -0.264,-1.94 -1.20,-3.75 -2.66,-5.06 -1.45,-1.32 -3.56,-2.14 -5.78,-1.72 a 2.01,2.01 0 1 0 0.75,3.94 c 0.9,-0.17 1.64,0.11 2.34,0.75 0.71,0.64 1.25,1.67 1.38,2.63 0.25,1.81 -0.39,3.4 -1.63,4.69 -1.24,1.29 -3.1,2.2 -4.91,2.38 -6.03,0.59 -10.88,-4.96 -11.28,-10.84 -0.62,-9.08 7.63,-16.2 16.44,-16.59 12.87,-0.58 22.80,11.09 23.13,23.53 0.43,16.73 -14.27,29.87 -30.5,30.84 a 2,2 0 1 0 0.25,4 c 18.23,-1.1 34.74,-15.83 34.25,-34.94 -0.35,-14.50 -11.94,-28.12 -27.28,-27.44 z" />
+			<path
+				style="stroke:#ffffff;stroke-width:4;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:0.59;fill:none"
+				d="m 103.05,29.46 c 3.74,4.65 2.16,11.48 -2.35,14.98 -6.15,4.78 -15.04,2.67 -19.55,-3.30 -5.99,-7.93 -3.24,-19.27 4.48,-24.95 10.03,-7.38 24.21,-3.88 31.25,5.89 8.97,12.46 4.59,29.93 -7.56,38.52 C 94.08,71.37 72.85,65.98 62.5,51.09 55.27,40.68 53.89,27.07 58.25,15.25"
+				transform="translate({{translate2 user.avatar}})" />
+			<path
+			   style="stroke:#ffffff;stroke-width:2.24;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:0.59;stroke-dasharray:none;fill:none;fill-opacity:1"
+			   d="m 59.45,83.01 c 1.97,-0.48 3.85,1 4.27,2.9 0.58,2.59 -1.36,5.02 -3.86,5.54 -3.31,0.69 -6.4,-1.8 -7.03,-5.01 -0.82,-4.16 2.32,-8.02 6.35,-8.77 5.14,-0.95 9.88,2.93 10.76,7.92 1.10,6.26 -3.64,12.01 -9.73,13.04 -4.25,0.72 -8.65,-0.84 -11.65,-3.9"
+			   transform="matrix(0.003,-1.79,-1.79,-0.003,{{translate3 user.avatar}})" />
+			<text
+				x="50%" y="50%" dy=".36em"
+				style="font-size:80px;font-family:Arial;font-weight:bold;fill:#ffffff;text-anchor:middle;text-transform:uppercase;filter:url(#shadow);">{{firstLetter user.username}}</text>
+		</svg>
+	{{/if}}
+{{/unless}}
+</template>

@@ -27,56 +27,110 @@ i18n.map('en', {
 	},
 	torrents : {
 		name     : "Torrents",
-		home     : "Last added",
-		search   : {
-			text : "Search torrents..."
+		home     : {
+			name  : "Last added",
+			title : "Latest torrents"
 		},
-		best     : "Most Downloaded",
+		search   : {
+			title : "Find a torrent"
+		},
+		best     : {
+			name  : "Most Downloaded",
+			title : "Most Downloaded Torrents"
+		},
 		random   : "Random",
-		upload   : "Upload",
-		groups   : "Groups",
+		add      : {
+			name  : "Upload",
+			title : "Add a torrent"
+		},
+		groups   : {
+			name  : "Groups",
+			title : "Torrent Groups"
+		},
 		requests : {
-			name   : "Requests",
+			title   : "Requests",
 			search : {
-				text : "Search Requests..."
+				title : "Find a Request"
 			}
 		},
-		autoget  : "AutoGet",
-		logs     : "Logs"
+		autoget  : {
+			title : "AutoGet"
+		},
+		logs     : {
+			title : "Logs"
+		}
 	},
 	community : {
 		name : "Community",
 		forum : {
-			name : "Forum",
+			title : "Forum",
 			search : {
-				text : "Search a post..."
+				title : "Find a post"
 			},
-			myposts : "My posts",
+			myposts : {
+				title : "My posts"
+			},
 		},
 		blog : {
-			name : "Blog"
+			title : "Blog"
 		},
 		imagehost : "Image Hoster",
 		polls : {
-			name : "Polls"
+			title : "Polls"
 		},
-		donations : "Donations",
+		donations : {
+			title : "Donations"
+		},
 		users : {
 			search : {
-				text : "Search a user..."
+				title : "Find a user"
 			}
 		},
 		messages : {
-			name : "inbox"
+			title : "inbox"
 		}
 	},
+	help : {
+		name :  "Help",
+		wiki : {
+			title : "Wiki",
+			search : {
+				title : "Find an article"
+			}
+		},
+		staff : {
+			title : "Staff"
+		},
+		rules : {
+			title : "Rules"
+		}
+	},
+	myaccount : {
+		name      : "My account",
+		profile   : "Profile",
+		favorites : "Favoris",
+		images    : "Images",
+		settings  : "Settings",
+		friends   : "Friends",
+		shop      : "Boutique",
+		warns     : "Avertissements"
+	},
+	sizes   : {
+		0 : 'B', 
+		1 : 'KiB', 
+		2 : 'MiB', 
+		3 : 'GiB', 
+		4 : 'TiB', 
+		5 : 'PiB',
+		length : '6'
+	},
+	notitle : "Untitled page",
 	loading : {
 		prepend   : "One moment, ",
 		length    : "7",
-		_comment  : "length  = number of sentences",
-		sentences :
-		[
-			"Balancing Katarina",
+		_comment  : "length = number of sentences",
+		sentences : [
+			"Finding the roots of a 42nd degree polynomial",
 			"Spying the NSA",
 			"Hackink the FBI",
 			"Writing a Brainfuck script",

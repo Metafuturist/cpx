@@ -1,0 +1,29 @@
+<template name="login">
+<img class="logo" src="{{static_host}}images/logo.svg" alt="{{www_name}}" />
+<div class="mainblock login">
+	<div class="login">
+		<div>
+			<form action="#" method="post">
+				<h1>{{i18n "login.title"}}</h1>
+				<input type="text" name="username" placeholder="{{i18n "login.user"}}" required />
+				<input type="password" name="password" placeholder="{{i18n "login.pass"}}" required />
+				<input type="submit" value="{{i18n "login.title"}}"/>
+				<span class="register">{{i18n "login.links.regintro"}} <a href="#register">{{i18n "login.links.reg"}}</a></span>
+			</form>
+		</div>
+	</div>
+	<div class="register">
+		<div>
+			<form action="#" method="post">
+				<h1>{{i18n "login.reg"}}</h1>
+				<input type="text" name="username" placeholder="{{i18n "login.user"}}" required />
+				<input type="password" name="password" placeholder="{{i18n "login.pass"}}" required />
+				<input type="password" name="password2" placeholder="{{i18n "login.pass2"}}" required />
+				<input type="email" name="email" placeholder="{{i18n "login.email"}}" required />
+				<input type="submit" value="{{i18n "login.reg"}}" />
+				<span class="register">{{i18n "login.links.loginintro"}} <a href="#login">{{i18n "login.links.login"}}</a></span>
+			</form>
+		</div>
+	</div>
+</div>
+</template>

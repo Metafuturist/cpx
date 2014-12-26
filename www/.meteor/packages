@@ -9,4 +9,5 @@ accounts-password
 mrt:just-i18n
 iron:router
 meteorhacks:fast-render
+cpx:bencode
 

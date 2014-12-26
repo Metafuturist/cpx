@@ -27,55 +27,110 @@ i18n.map('fr', {
 	},
 	torrents : {
 		name     : "Torrents",
-		home     : "Plus récents",
-		search   : {
-			text : "Rechercher un torrent..."
+		home     : {
+			name  : "Plus récents",
+			title : "Derniers torrents ajoutés"
 		},
-		best     : "Plus téléchargés",
+		search   : {
+			title : "Rechercher un torrent"
+		},
+		best     : {
+			name  : "Plus téléchargés",
+			title : "Torrents les plus téléchargés"
+		},
 		random   : "Au hasard",
-		upload   : "Ajouter",
-		groups   : "Groupes",
+		add      : {
+			name  : "Ajouter",
+			title : "Ajouter un torrent"
+		},
+		groups   : {
+			name  : "Groupes",
+			title : "Groupes de torrents"
+		},
 		requests : {
-			name   : "Requêtes",
+			title  : "Requêtes",
 			search : {
-				text : "Rechercher une requête..."
+				title : "Rechercher une requête"
 			}
 		},
-		autoget  : "AutoGet",
-		logs     : "Logs"
+		autoget  : {
+			title : "AutoGet"
+		},
+		logs     : {
+			title : "Logs"
+		}
 	},
 	community : {
 		name : "Communauté",
 		forum : {
-			name : "Forum",
+			title : "Forum",
 			search : {
-				text : "Rechercher un message..."
+				title : "Rechercher un message"
 			},
-			myposts : "Mes messages",
+			myposts : {
+				title : "Mes messages"
+			},
 		},
 		blog : {
-			name : "Blog"
+			title : "Blog"
 		},
 		imagehost : "Hébergeur d'images",
 		polls : {
-			name : "Sondages"
+			title : "Sondages"
 		},
-		donations : "Dons",
+		donations : {
+			title : "Dons"
+		},
 		users : {
 			search : {
-				text : "Rechercher un utilisateur..."
+				title : "Rechercher un utilisateur..."
 			}
 		},
 		messages : {
-			name : "Messagerie"
+			title : "Messagerie"
 		}
 	},
+	help : {
+		name :  "Aide",
+		wiki : {
+			title  : "Wiki",
+			search : {
+				title : "Rechercher des articles"
+			}
+		},
+		staff : {
+			title : "Équipe"
+		},
+		rules : {
+			title : "Règles"
+		}
+	},
+	myaccount : {
+		name      : "Mon Compte",
+		profile   : "Profil",
+		favorites : "Favoris",
+		images    : "Images",
+		settings  : "Paramètres",
+		friends   : "Amis",
+		shop      : "Boutique",
+		warns     : "Avertissements"
+	},
+	sizes   : {
+		0 : 'o', 
+		1 : 'Kio', 
+		2 : 'Mio', 
+		3 : 'Gio', 
+		4 : 'Tio', 
+		5 : 'Pio',
+		length : '6'
+	},
+	notitle : "Page sans titre",
 	loading : {
 		prepend   : "Un instant, ",
 		length    : "7",
-		_comment  : "length  = number of sentences",
+		_comment  : "length = nombre de phrases",
 		sentences : [
-			"Equilibrage de Katarina",
+			"Recherche des racines d'un polynôme du 42ème degré",
 			"Espionnage de la NSA",
 			"Hack du FBI",
 			"Ecriture d'un script en Brainfuck",

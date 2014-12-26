@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TEST</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+	<form action="index.html" method="post">
+		<input type="file" name="file" />
+	</form>
+	<button onclick="getfile()">Compute info_hash</button>
+	<div id="result"></div>
+	<script type="text/javascript" src="https://rawgithub.com/srijs/rusha/master/rusha.js"></script>
+	<script type="text/javascript" src="bencodebis.js"></script>
+	<script type="text/javascript">
+		var fileReader = new FileReader(), rusha = new Rusha(), myArray;
+		function getfile(){
+			try{
+				var file = document.querySelector("input").files;
+				if(file.length != 1)
+					return console.error("You must select one file!");
+				file = file[0];
+				// Is this a torrent file? To know this, let's check the extension...
+				if(file.name.slice(-8) != ".torrent"/* || file.type != "application/x-bittorrent" Not Working on Chrome*/)
+					return console.error("You must select a torrent file!");
+				if(file.size > 500*1024) //file.size is the size of the file in octets
+					return console.error("This file is too big!");
+				
+				fileReader.readAsArrayBuffer(file); //Using this encoding, every byte corresponds to one character, which makes easy string delimitation
+				fileReader.onloadend= function(){
+					myArray = new Uint8Array(fileReader.result);
+					myArray = bdecode(myArray);
+					// It's Binary TIME! WOHOOO! #PartyHard
+					document.getElementById('result').innerHTML=rusha.digestFromBuffer(Uint8Array(bencode(myArray.info)).buffer).toUpperCase();
+					download("YOLO.torrent", "data:application/x-bittorrent;base64," + btoa(String.fromCharCode.apply(null, bencode(myArray))));
+				};
+			} catch (exception) {
+				console.error(exception);
+			}
+		}
+		function download(filename, data) {
+			var pom = document.createElement('a');
+			pom.setAttribute('href', data);
+			pom.setAttribute('download', filename);
+			pom.setAttribute('style', 'display: none;')
+			document.body.appendChild(pom); //Append it to the body to make it clickable
+			pom.click();
+			pom.remove();
+		}
+	</script>
+</body>
+</html>
