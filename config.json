@@ -13,7 +13,7 @@
 	"www_host"      : "https://www.cpx.cx",
 	"www_port"      : 3000,
 	"public"        : {
-	"static_host"   : "https://static.cpx.cx/",
+	"static_url"    : "https://static.cpx.cx/",
 	"www_name"      : "CPX"
 	}
 }

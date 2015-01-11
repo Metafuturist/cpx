@@ -1,8 +1,8 @@
 <template name="layout">
 <head>
 	<meta charset="utf-8" />
-	<link rel="icon" type="image/x-icon" href="{{static_host}}favicon.ico" />
-	<link rel="stylesheet" href="{{static_host}}style.css" />
+	<link rel="icon" type="image/x-icon" href="{{static_url}}favicon.ico" />
+	<link rel="stylesheet" href="{{static_url}}style.css" />
 	<meta name="viewport" content="width=device-width" />
 	<!-- TODO : Improve SEO -->
 </head>
@@ -17,7 +17,7 @@
 {{#if currentUser}}
 <div id="content"><div id="container"><!-- Here is our content, once the user has logged in... -->
 	<div id="header">
-		<img src="{{static_host}}images/logo.svg" alt="Logo" />
+		<img src="{{static_url}}images/logo.svg" alt="Logo" />
 		<div id="userdata">
 			{{>avatar user=currentUser}}
 			<div class="text">

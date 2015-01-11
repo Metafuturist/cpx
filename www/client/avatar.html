@@ -2,7 +2,7 @@
 {{! Avatar template - It's better to load it once for all ! }}
 {{#unless user.avatar}}
 	{{! Make sure we have data to avoid exceptions in the callbacks}}
-	<img src="{{static_host}}images/loading.svg" alt="Loading..." class="avatar" />
+	<img src="{{static_url}}images/loading.svg" alt="Loading..." class="avatar" />
 {{else}}
 	{{#if isUrl user.avatar}}
 		{{! The user set a custom avatar - Display it!}}
