@@ -8,6 +8,7 @@ Package.on_use(function(api){
 	// The things we want to export!
 	api.export('bencode');
 	api.export('bdecode');
+	api.export('intToString');
 	// Don't forget to put the file everywhere
 	api.add_files('bencode.js', ['client', 'server']);
 });

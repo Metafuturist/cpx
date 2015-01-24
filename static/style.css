@@ -71,6 +71,75 @@ body{
 	visibility:visible;
 	transition-delay:0s, 0.1s; /* So that the visibility is directly changed */
 }
+/************
+ * MESSAGES *
+ ************/
+/* Common rules */
+div.msg{
+	display:block;
+	text-align:center;
+}
+div.error, div.warn, div.ok, div.info{
+	display:block; /* Per default, the item is full-width */
+	margin:10px auto;
+	color:white;
+	border:1px solid #f0f; /* Pink will normally never get displayed, it is just a way to know which blocks are not stylised correctly */
+	text-shadow:0 -1px 0 rgba(0,0,0,0.5);
+	padding:5px 5px 5px 30px;
+	min-height:20px;
+	line-height:20px;
+	box-shadow:0 0 2px white inset;
+	border-radius:5px;
+	position:relative;
+	text-align:left;
+}
+div.msg > div{
+	display:inline-block; /* If we can, let's center the item! */
+}
+div.error:before, div.warn:before, div.ok:before, div.info:before{
+	position:absolute;
+	top:5px;
+	left:5px;
+	font-family:FontAwesome;
+	content:'?';
+	font-size:20px;
+	color:#000;
+	height:20px;
+	text-shadow:0 0 2px white;
+	opacity:0.5;
+}
+/* Error messages */
+div.error{
+	background:linear-gradient(to bottom, #F06B6B, #B65858);
+	border-color:#BB3232;
+}
+div.error:before{
+	content:'\f06a';
+}
+/* Warning messages */
+div.warn{
+	background:linear-gradient(to bottom, #FFC44D, #DDB300);
+	border-color:#d60;
+}
+div.warn:before{
+	content:'\f071';
+}
+/* Informations */
+div.info{
+	border-color:#22f;
+	background:linear-gradient(to bottom, #99f, #66c);
+}
+div.info:before{
+	content:'\f05a';
+}
+/* Success */
+div.ok{
+	border-color:#181;
+	background:linear-gradient(to bottom, #11DD46, #20A72C);
+}
+div.ok:before{
+	content:'\f058';
+}
 /*****************
  * LOGIN SCREEN  *
  *****************/
@@ -145,7 +214,7 @@ body{
 #login div h1{
 	margin:0;
 	text-shadow:1px 1px 1px white;
-	padding-bottom:10px;
+	margin-bottom:10px;
 }
 /* About transitions on the login screen */
 #login div.mainblock > div{
@@ -174,33 +243,6 @@ body{
 	height:1px;
 	background:linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.5), rgba(0,0,0,0));
 	content:'';
-}
-/* Error container */
-#login div .error{
-	margin-bottom:10px;
-	color:white;
-	border:1px solid #BB3232;
-	text-shadow:0 -1px 0 rgba(0,0,0,0.5);
-	padding:5px 5px 5px 30px;
-	min-height:20px;
-	line-height:20px;
-	background:linear-gradient(to bottom, #F06B6B, #B65858);
-	background-size:100% 100%;
-	box-shadow:0 0 2px white inset;
-	border-radius:5px;
-	position:relative;
-}
-#login div .error:before{
-	position:absolute;
-	top:0;
-	bottom:0;
-	left:5px;
-	font-family:FontAwesome;
-	content:'\f06a';
-	font-size:20px;
-	color:#ccc;
-	height:20px;
-	margin:auto;
 }
 /* Link at the bottom of the login box */
 #login div span.register:before{

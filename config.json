@@ -8,11 +8,11 @@
 		"user"          : "cpx",
 		"password"      : "cpx"
 	},
-	"tracker_host"  : "tracker.cpx.cx",
 	"tracker_port"  : 5050,
 	"www_host"      : "https://www.cpx.cx",
 	"www_port"      : 3000,
 	"public"        : {
+	"tracker_host"  : "tracker.cpx.cx",
 	"static_url"    : "https://static.cpx.cx/",
 	"www_name"      : "CPX"
 	}

@@ -110,7 +110,7 @@ bdecode = function(myArray, type){
 	return false;
 }
 
-function intToString(array){
+intToString = function(array){
 	var data = new BinaryData(array), result="";
 	for(var i = 0; i < array.length; i++)
 		result += data.nextChar();
