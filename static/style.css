@@ -19,58 +19,6 @@ body{
 	font-size:16px;
 	color:black;
 }
-/*****************
- * LOADING WHEEL *
- *****************/
-@keyframes rot{
-	from {
-		transform: rotate(0deg);
-	} to {
-		transform: rotate(360deg);
-	}
-}
-@-webkit-keyframes rot{
-	from {
-		-webkit-transform: rotate(0deg);
-	} to {
-		-webkit-transform: rotate(360deg);
-	}
-}
-#loading{
-	position:fixed;
-	top:0;
-	right:0;
-	z-index:999999;
-	width:50px;
-	height:50px;
-	font-size:40px;
-	line-height:50px;
-	border:1px solid rgba(255,255,255,0.9);
-	border-width:0 0 1px 1px;
-	border-radius:0 0 0 10px;
-	background-color:rgba(255,255,255,0.8);
-	box-shadow:0 0 10px white;
-	opacity:0;
-	visibility:hidden;
-	transition:visibility 0.1s, opacity 0.1s;
-}
-#loading:before{
-	font-family: FontAwesome;
-	content:'\f021';
-	text-align:center;
-	color:#22d;
-	display:block;
-	/* Let's make it turn - Works even with IE 10 ! */
-	animation:rot 1s linear infinite;
-	transform-origin:center center;
-	-webkit-animation:rot 1s linear infinite;
-	-webkit-transform-origin:center center;
-}
-#loading.active{
-	opacity:1;
-	visibility:visible;
-	transition-delay:0s, 0.1s; /* So that the visibility is directly changed */
-}
 /************
  * MESSAGES *
  ************/
@@ -139,6 +87,61 @@ div.ok{
 }
 div.ok:before{
 	content:'\f058';
+}
+/**** LOADING ****/
+@keyframes rot{
+	from {
+		transform: rotate(0deg);
+	} to {
+		transform: rotate(360deg);
+	}
+}
+@-webkit-keyframes rot{
+	from {
+		-webkit-transform: rotate(0deg);
+	} to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+.loading{
+	position:relative;
+	min-height:100px;
+	min-width:100px;
+}
+.loading > *{
+	opacity:0.5;
+	transition:opacity 0.5s;
+}
+.loading:before{ /* Display the loading wheel */
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	top:0;
+	width:100px;
+	height:100px;
+	margin:auto;
+	font-family:fontAwesome;
+	content:'\f021';
+	font-size:100px;
+	animation:rot 2s linear infinite;
+	transform-origin:center center;
+	-webkit-animation:rot 2s linear infinite;
+	-webkit-transform-origin:center center;
+	text-shadow:0 0 10px white;
+	z-index:2;
+}
+.loading:after{ /* Disable clicking on anything displaying something over */
+	z-index:1;
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	top:0;
+	content:'';
+	display:block;
+	width:100%;
+	height:100%;
 }
 /*****************
  * LOGIN SCREEN  *

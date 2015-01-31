@@ -20,20 +20,26 @@ Template.login.events({
 			return;
 		
 		var form = $(event.target);
-		var user = form.find('input[type="text"]').val();
-		var pass = form.find('input[type="password"]').val();
 		
-		form.find('input').attr('disabled', ''); // Disable every input!
-		form.find('.error').remove(); // Clear all error messages - Perhaps work on better way to appear and disappear?
-		if(user == "" || pass == "")
-			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.fillfields')));
-		else if(user.length < 3)
-			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.tooshortuser')));
-		else if(pass.length < 6)
-			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.tooshortpass')));
-		else{
-			form.find('input[type="password"]').val(''); // Clear the password!
+		try{
+			var user = form.find('input[type="text"]').val();
+			var pass = form.find('input[type="password"]').val();
+			
+			form.find('input').attr('disabled', ''); // Disable every input!
+			form.find('.error').remove(); // Clear all error messages - Perhaps work on better way to appear and disappear?
+			if(user == "" || pass == "")
+				throw 'fillfields';
+			if(user.length < 3)
+				throw 'tooshortuser';
+			if(pass.length < 6)
+				throw 'tooshortpass';
+			
+			// All the tests passed, let's check credentials now!
+			
+			form.addClass('loading'); // At this very moment we may have to wait for the server, so let's add the loading wheel
+			form.find('input[type="password"]').val(''); // Clear the password
 			Meteor.loginWithPassword(user, pass, function(err){
+				$('#login > div .login form').removeClass('loading'); // The server replied!
 				$('#login > div .login input').removeAttr('disabled');
 				if(err) // Something went wrong.
 					return $('#login > div > .login h1').after($('<div>').addClass('error').html(i18n('login.error.badlogin')));
@@ -41,9 +47,11 @@ Template.login.events({
 				$('body').addClass('connected');
 				Meteor.subscribe('userData', 'me'); // Load the user's data while you're on it
 			});
-			return;
+			
+		} catch(e){ // If there was an error
+			form.find('input').removeAttr('disabled');
+			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.' + e)));
 		}
-		form.find('input').removeAttr('disabled');
 	}, 
 	'submit .mainblock .register form': function(event){
 		event.preventDefault();
@@ -51,38 +59,45 @@ Template.login.events({
 		if(Meteor.loggingIn()) // If we are already logging in
 			return;
 		
-		var form  = $(event.target);
-		var user  = form.find('input[type="text"]').val();
-		var pass  = form.find('input[type="password"]').first().val();
-		var pass2 = form.find('input[type="password"]').last().val();
-		var email = form.find('input[type="email"]').last().val();
-		
-		form.find('input').attr('disabled', ''); // Disable every input!
-		form.find('.error').remove(); // Clear all error messages - Perhaps work on better way to appear and disappear?
-		if(user == "" || pass == "")
-			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.fillfields')));
-		else if(user.length < 3)
-			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.tooshortuser')));
-		else if(pass.length < 6)
-			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.tooshortpass')));
-		else if (pass != pass2)
-			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.differentpasses')));
-		else if (!(/[a-z0-9_\-\\\/]+@[a-z0-9]+\.[a-z]+/i.test(email)))
-			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.invalidmail')));
-		else{
+		try {
+			var form  = $(event.target);
+			var user  = form.find('input[type="text"]').val();
+			var pass  = form.find('input[type="password"]').first().val();
+			var pass2 = form.find('input[type="password"]').last().val();
+			var email = form.find('input[type="email"]').last().val();
+			
+			form.find('input').attr('disabled', ''); // Disable every input!
+			form.find('.error').remove(); // Clear all error messages - Perhaps work on better way to appear and disappear ?
+			if(user == "" || pass == "")
+				throw 'fillfields';
+			if(user.length < 3)
+				throw 'tooshortuser';
+			if(pass.length < 6)
+				throw 'tooshortpass';
+			if (pass != pass2)
+				throw 'differentpasses';
+			if (!(/[a-z0-9_\-\\\/]+@[a-z0-9]+\.[a-z]+/i.test(email)))
+				throw 'invalidmail';
+			
+			// We passed the tests! Let's register!
+			$('.mainblock .register form').addClass('loading');
 			form.find('input[type="password"]').val(''); //Clear the passwords!
 			Accounts.createUser({
 				username : user,
 				password : pass,
 				email    : email
-			},function(err){
+			}, function(err){
 				$('#login > div .register input').removeAttr('disabled');
+				$('.mainblock .register form').removeClass('loading');
 				if(err)
 					return $('#login > div .register h1').after($('<div>').addClass('error').html(i18n(err.reason)));
 				$('body').addClass('connected'); //So it's ok, let's connect say you're connected
+				Meteor.subscribe('userData', 'me'); // Don't forget to load the user's data
 			});
-			return;
+			
+		} catch(e) { // If there was an error
+			form.parent().find('h1').after($('<div>').addClass('error').html(i18n('login.error.' + e )));
+			form.find('input').removeAttr('disabled');
 		}
-		form.find('input').removeAttr('disabled');
 	}
 });
