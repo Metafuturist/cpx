@@ -12,24 +12,56 @@
 	font-style: normal;
 }
 html{
-	font-family:'Arial';
+	font-family:sans-serif;
 }
 body{
 	overflow:hidden;
 	font-size:16px;
 	color:black;
 }
+/**********
+ * TITLES *
+ **********/
+h1, h2, h3, h4, h5, h6{
+	text-indent:20px;
+	text-shadow:2px 2px 5px rgba(0,0,0,0.3);
+	font-weight:bold;
+	margin:10px 0;
+}
+h1{
+	font-size:30px;
+	color:#ECA600;
+}
+h2{
+	font-size:26px;
+	color:#66B635;
+}
+h3{
+	font-size:22px;
+	color:#3556B6;
+}
+h4{
+	font-size:20px;
+	color:#B63A35;
+}
+h5{
+	font-size:18px;
+	color:#777;
+}
+h6{
+	font-size:16px;
+	font-style:italic;
+	color:#000;
+}
 /************
  * MESSAGES *
  ************/
 /* Common rules */
-div.msg{
-	display:block;
-	text-align:center;
-}
 div.error, div.warn, div.ok, div.info{
-	display:block; /* Per default, the item is full-width */
+	display:block;
+	width:50%;
 	margin:10px auto;
+	min-width:250px;
 	color:white;
 	border:1px solid #f0f; /* Pink will normally never get displayed, it is just a way to know which blocks are not stylised correctly */
 	text-shadow:0 -1px 0 rgba(0,0,0,0.5);
@@ -40,9 +72,6 @@ div.error, div.warn, div.ok, div.info{
 	border-radius:5px;
 	position:relative;
 	text-align:left;
-}
-div.msg > div{
-	display:inline-block; /* If we can, let's center the item! */
 }
 div.error:before, div.warn:before, div.ok:before, div.info:before{
 	position:absolute;
@@ -346,7 +375,6 @@ div.ok:before{
 /* Once the user is connected, hide the login screen */
 body.connected #login{
 	top:-110%;
-	transition-duration:0s 1s 1s;
 	visibility:hidden;
 	border-bottom-width:1px;
 }

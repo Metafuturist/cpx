@@ -42,22 +42,6 @@ i18n.map('fr', {
 		add      : {
 			name  : "Ajouter",
 			title : "Ajouter un torrent"
-		},
-		groups   : {
-			name  : "Groupes",
-			title : "Groupes de torrents"
-		},
-		requests : {
-			title  : "Requêtes",
-			search : {
-				title : "Rechercher une requête"
-			}
-		},
-		autoget  : {
-			title : "AutoGet"
-		},
-		logs     : {
-			title : "Logs"
 		}
 	},
 	community : {
@@ -114,6 +98,14 @@ i18n.map('fr', {
 		friends   : "Amis",
 		shop      : "Boutique",
 		warns     : "Avertissements"
+	},
+	categories : {
+		0 : 'Applications',
+		1 : 'Films',
+		2 : 'Musique',
+		3 : 'Emission TV',
+		4 : 'Livres',
+		5 : 'Divers'
 	},
 	sizes   : {
 		0 : 'o', 

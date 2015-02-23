@@ -8,5 +8,5 @@ UI.registerHelper('toReadableSize', function(a){ // Get a readable size from a s
 		a/=1024;
 		b++;
 	}
-	return Math.floor(a, 3) + ' ' + i18n('sizes.' + b);
+	return Math.floor(a*100)/100 + ' ' + i18n('sizes.' + b);
 });

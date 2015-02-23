@@ -42,22 +42,6 @@ i18n.map('en', {
 		add      : {
 			name  : "Upload",
 			title : "Add a torrent"
-		},
-		groups   : {
-			name  : "Groups",
-			title : "Torrent Groups"
-		},
-		requests : {
-			title   : "Requests",
-			search : {
-				title : "Find a Request"
-			}
-		},
-		autoget  : {
-			title : "AutoGet"
-		},
-		logs     : {
-			title : "Logs"
 		}
 	},
 	community : {
@@ -114,6 +98,14 @@ i18n.map('en', {
 		friends   : "Friends",
 		shop      : "Boutique",
 		warns     : "Avertissements"
+	},
+	categories : {
+		0 : 'Applications',
+		1 : 'Movies',
+		2 : 'Music',
+		3 : 'TV Shows',
+		4 : 'Books',
+		5 : 'Other'
 	},
 	sizes   : {
 		0 : 'B', 

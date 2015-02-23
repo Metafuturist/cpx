@@ -14,6 +14,7 @@
 	"public"        : {
 	"tracker_host"  : "tracker.cpx.cx",
 	"static_url"    : "https://static.cpx.cx/",
-	"www_name"      : "CPX"
+	"www_name"      : "CPX",
+	"n_cats"        : 6
 	}
 }

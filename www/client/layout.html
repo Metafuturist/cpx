@@ -7,7 +7,6 @@
 	<!-- TODO : Improve SEO -->
 </head>
 
-<div id="loading">&nbsp;</div>
 <div id="login"><!-- That's our login screen that is displayed when the user arrives -->
 	{{> login}}
 	<div class="about">
@@ -43,14 +42,6 @@
 							<li><a>{{i18n "torrents.best.name"}}</a></li>
 							<li><a>{{i18n "torrents.random"}}</a></li>
 							<li><a href="{{pathFor route="torrents.add"}}">{{i18n "torrents.add.name"}}</a></li>
-							<li><a>{{i18n "torrents.groups.name"}}</a></li>
-							<li><a>{{i18n "torrents.requests.title"}}</a></li>
-							<li><form>
-								<input type="text" placeholder="{{i18n "torrents.requests.search.title"}}"/>
-								<input type="submit" value="&#xf002;" />
-							</form></li>
-							<li><a>{{i18n "torrents.autoget.title"}}</a></li>
-							<li><a>{{i18n "torrents.logs.title"}}</a></li>
 						</ul>
 					</li>
 					<li class="right">&#xf054;</li>
