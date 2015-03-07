@@ -1,1 +1,0 @@
-<?php Header('Location: ' . json_decode(file_get_contents(dirname(__FILE__) . '/../config.json'))->www_host); //Redirect a lost dude to the main site

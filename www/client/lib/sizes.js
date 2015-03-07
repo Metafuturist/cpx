@@ -1,5 +1,5 @@
 /***** Sizes Helpers *****/
-UI.registerHelper('toReadableSize', function(a){ // Get a readable size from a size in bytes
+Template.registerHelper('toReadableSize', function(a){ // Get a readable size from a size in bytes
 	if(a === undefined) // If the data is not ready yet
 		return '?';
 	

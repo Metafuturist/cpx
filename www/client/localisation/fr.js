@@ -41,7 +41,22 @@ i18n.map('fr', {
 		random   : "Au hasard",
 		add      : {
 			name  : "Ajouter",
-			title : "Ajouter un torrent"
+			title : "Ajouter un torrent",
+			step  : {
+				1 : {
+					title   : "Etape 1 : Choisissez votre fichier torrent",
+					summary : "dans {$1} fichier(s) et {$2} dossier(s) avec le fichier :<br><code>{$3}</code>"
+				},
+				2 : {
+					title    : "Etape 2 : Ajoutez quelques informations sur ce torrent",
+					category : "Catégorie"
+				}
+			},
+
+			warn  : {
+				tracker : "<b>Un instant!</b><br />On dirait que ce torrent n'a pas été généré pour {$1}.<br />Avez-vous oublié de mettre <code>http://{$2}/</code> en tant que tracker ?<br />Cliquez à nouveau sur le bouton 'Valider' si vous voulez que nous arrangions cela automatiquement."
+			},
+			submit: "Valider"
 		}
 	},
 	community : {

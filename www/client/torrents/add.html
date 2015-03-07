@@ -1,25 +1,30 @@
 <template name="torrents_add">
 <div id="torrent_add">
-	<h1>Add a torrent</h1>
+	<h1>{{i18n "torrents.add.title"}}</h1>
 	<form>
 		<div id="step1">
-			<h2>Step 1 : Select your file</h2>
+			<h2>{{i18n "torrents.add.step.1.title"}}</h2>
 			{{#if stepIs 1}}
 			<input type="file" name="file" required accept="application/x-bittorrent" />
 			{{else}}
-			<div class="ok"><b>{{toReadableSize torrent.size}}</b> in {{torrent.n_files}} file(s) and {{torrent.n_folders}} folder(s) using file :<br />
-			<code>{{torrent.name}}</code></div>
+			<div class="ok"><b>{{toReadableSize torrent.size}}</b> {{{i18n "torrents.add.step.1.summary" torrent.n_files torrent.n_folders torrent.name}}}</div>
 			{{/if}}
 		</div>
 		
 		{{#if stepIs 2}}
 		<div id="step2">
-			<h2>Step 2 : Provide torrent details</h2>
+			<h2>{{i18n "torrents.add.step.2"}}</h2>
+			<h4>{{i18n "torrents.add.step.2.category"}}</h4>
+			<div id="catselector">
+				{{#each categories}}
+					<span>{{name}}</span>
+				{{/each}}
+			</div>
 		</div>
 		{{/if}}
 		{{! Display the submit button unless we have reached the final step}}
 		{{#unless stepIs 99}}
-		<button type="submit"><span>&#xf058;</span> Submit</button>
+		<button type="submit"><span>&#xf058;</span> {{i18n "torrents.add.submit"}}</button>
 		{{/unless}}
 	</form>
 </div>

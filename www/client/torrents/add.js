@@ -25,6 +25,12 @@ function resetTorrentAddData(){
 Template.torrents_add.helpers({
 	'stepIs':function(i){
 		return i == Session.get('torrent_add').step;
+	},
+	'categories':function(){
+		result=[];
+		for(i=0; i<Meteor.settings.public.n_cats; i++)
+			result.push({name:i18n("categories." + i)});
+		return result;
 	}
 });
 
@@ -155,7 +161,7 @@ Template.torrents_add.events({
 						throw '';
 				} catch(e) {
 					if($('#trackerwarn').size() == 0){ // Display an error message, if not already displayed
-						return $('#step1').before('<div class="warn" id="trackerwarn"><b>One moment!</b><br />It looks like this torrent was not generated for ' + Meteor.settings.public.www_name + '.<br />Did you forget to set the tracker URL to <code>http://' + Meteor.settings.public.tracker_host + '/</code> ?<br />Please click the submit button again if you want us to fix it for you.</div>'); // TODO : Add a config option to completely reject or not (just fix them) torrents which don't have our tracker announce URL.
+						return $('#step1').before('<div class="warn" id="trackerwarn">' + i18n('torrents.add.warn.tracker', Meteor.settings.public.www_name, Meteor.settings.public.tracker_host) + '</div>'); // TODO : Add a config option to completely reject or not (just fix them) torrents which don't have our tracker announce URL.
 					} else 
 						$('#trackerwarn').remove(); // Remove the warning if already displayed
 				}

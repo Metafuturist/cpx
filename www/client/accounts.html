@@ -5,8 +5,8 @@
 		<div>
 			<form action="#" method="post">
 				<h1>{{i18n "login.title"}}</h1>
-				<input type="text" name="username" placeholder="{{i18n "login.user"}}" required />
-				<input type="password" name="password" placeholder="{{i18n "login.pass"}}" required />
+				<input type="text" id="login_user" name="username" placeholder="{{i18n "login.user"}}" required /><label for="login_user">&#xf007;</label>
+				<input type="password" id="login_pass" name="password" placeholder="{{i18n "login.pass"}}" required /><label for="login_pass">&#xf084;</label>
 				<input type="submit" value="{{i18n "login.title"}}"/>
 				<span class="register">{{i18n "login.links.regintro"}} <a href="#register">{{i18n "login.links.reg"}}</a></span>
 			</form>
@@ -16,10 +16,10 @@
 		<div>
 			<form action="#" method="post">
 				<h1>{{i18n "login.reg"}}</h1>
-				<input type="text" name="username" placeholder="{{i18n "login.user"}}" required />
-				<input type="password" name="password" placeholder="{{i18n "login.pass"}}" required />
-				<input type="password" name="password2" placeholder="{{i18n "login.pass2"}}" required />
-				<input type="email" name="email" placeholder="{{i18n "login.email"}}" required />
+				<input type="text" id="reg_user" name="username" placeholder="{{i18n "login.user"}}" required /><label for="reg_user">&#xf007;</label>
+				<input type="password" id="reg_pass" name="password" placeholder="{{i18n "login.pass"}}" required /><label for="reg_pass">&#xf084;</label>
+				<input type="password" id="reg_pass2" name="password2" placeholder="{{i18n "login.pass2"}}" required /><label for="reg_pass2">&#xf084;</label>
+				<input type="email" id="reg_email" name="email" placeholder="{{i18n "login.email"}}" required /><label for="reg_email">&#xf003;</label>
 				<input type="submit" value="{{i18n "login.reg"}}" />
 				<span class="register">{{i18n "login.links.loginintro"}} <a href="#login">{{i18n "login.links.login"}}</a></span>
 			</form>

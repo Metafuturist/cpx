@@ -6,8 +6,8 @@
  *****************/
 @font-face { /* Load FontAwesome */
 	font-family: 'FontAwesome';
-	src: url('../fonts/fontawesome-webfont.eot?v=4.1.0');
-	src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.1.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.1.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.1.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.1.0#fontawesomeregular') format('svg');
+	src: url('../fonts/fontawesome-webfont.eot?v=4.3.0');
+	src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -233,6 +233,7 @@ div.ok:before{
 }
 /* That's our blocks */
 #login > div.mainblock > div > div > form{
+	max-width:330px;
 	background:#ddd;
 	border:1px solid #333;
 	display:inline-block;
@@ -247,6 +248,8 @@ div.ok:before{
 	margin:0;
 	text-shadow:1px 1px 1px white;
 	margin-bottom:10px;
+	color:inherit;
+	text-indent:0;
 }
 /* About transitions on the login screen */
 #login div.mainblock > div{
@@ -294,34 +297,45 @@ div.ok:before{
 	color:#053A7C;
 }
 /* Form inputs style */
+#login div label{
+	float:left; /* We put the item just after, so that we can change effects on it when the input is selected */
+	width:20px;
+	font-size:20px;
+	vertical-align:top;
+	background:linear-gradient(to bottom, #eee,#ccc);
+	height:35px;
+	border:1px solid #aaa;
+	border-right:0px;
+	border-radius:5px 0 0 5px;
+	line-height:35px;
+	padding:0 3px 0 4px;
+	text-shadow:0 1px 0 white;
+	transition:0.5s border-color, 0.5s color;
+	font-family: FontAwesome;
+}
 #login div input:not([type="submit"]){
 	display:block;
 	height:2em;
-	padding:5px 5px 5px 35px;
+	padding:5px;
 	width:calc(100% - 40px);
-	border-radius:5px;
+	border-radius:0 5px 5px 0;
 	border:1px solid #aaa;
 	margin:0 auto 5px; /* The auto margin is to make sure shitty browsers like Opera keep the page swaggy */
 	background-color:#f2f2f2;
-	background-image:url('images/user.svg'); /* We /COULD/ use FontAwesome, but it is easier to use a background as the input item doesn't support :before */
-	background-position:5px 5px;
-	background-size:25px 25px;
-	background-repeat:no-repeat;
 	height:25px;
 	line-height:25px;
 	box-shadow:inset 0 2px 5px rgba(0,0,0,0.2);
-	transition:0.5s border-color, 0.5s background-color, 0.5s box-shadow;
-}
-#login div input[type="password"]{
-	background-image:url('images/password.svg');
-}
-#login div input[type="email"]{
-	background-image:url('images/email.svg');
+	transition:0.5s border-color, 0.5s box-shadow, 0.5s border-color;
+	display:inline-block;
 }
 #login div input:not([type="submit"]):focus{
-	border:1px solid #55f;
+	border-color:#55f;
 	background-color:#fafafa;
 	box-shadow:inset 0 0 5px rgba(0,0,0,0.3);
+}
+#login div input:not([type="submit"]):focus + label{
+	border-color:#55f;
+	color:#03499E;
 }
 #login div input:not([type="submit"]):disabled{
 	background-color:#ccc;
@@ -334,15 +348,12 @@ div.ok:before{
 	height:37px;
 	border-radius:5px;
 	border:1px solid;
-	/* border-color:#1C5477; BLUE */
 	border-color:#2D6802;
-	/*background:linear-gradient(to bottom, #127DC5, #095787); BLUE */
 	background:linear-gradient(to bottom, #38C411, #328608);
 	padding:5px;
 	font-weight:bold;
 	font-size:20px;
 	box-shadow:inset 0 0 0 1px rgba(255,255,255,0.5);
-	/*color:#A9C8F3; BLUE */
 	color:#9F9;
 	text-shadow:0 -1px 0 rgba(0,0,0,0.5);
 	transition:color 0.5s;
@@ -352,7 +363,6 @@ div.ok:before{
 	cursor:pointer;
 }
 #login div input[type="submit"]:active{
-	/* background:linear-gradient(to top, #127DC5, #095787); BLUE */
 	background:linear-gradient(to top, #38C411, #328608);
 }
 #login div input[type="submit"]:disabled{
@@ -701,11 +711,11 @@ body.connected #login{
 }
 /*** Search Inputs ***/
 #tabs ul li form{
-	font-size:0;
 	height:20px;
 	margin:5px 0;
 	position:relative;
 	top:-1px;
+	line-height:20px;
 }
 #tabs ul li input[type="text"]{
 	border:1px solid rgba(255,255,255,0.5);
@@ -718,6 +728,7 @@ body.connected #login{
 	box-shadow:0 1px 3px rgba(0,0,0,0.5)inset;
 	width:100px;
 	transition:all 0.5s;
+	vertical-align:middle;
 }
 #tabs ul li input[type="text"]:focus{
 	background:rgba(255,255,255,0.8);
@@ -732,7 +743,7 @@ body.connected #login{
 	width:20px;
 	margin:0;
 	font-size:0;
-	vertical-align:sub; /* I don't really know what this value means, but it works so just let it that way */
+	vertical-align:middle;
 	border:1px solid white;
 	border-left:0 none;
 	border-radius:0 5px 5px 0;
@@ -740,6 +751,7 @@ body.connected #login{
 	transition:all 0.5s;
 	font-size:14px;
 	font-family:FontAwesome;
+	line-height:16px;
 }
 #tabs ul li input[type="submit"]:hover{
 	opacity:1;
