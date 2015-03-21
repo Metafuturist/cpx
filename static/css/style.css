@@ -402,7 +402,7 @@ body.connected #login{
 	z-index:1;
 	overflow-y:auto;
 	overflow-x:hidden;
-	background:url('images/bg.svg') center center fixed;
+	background:url('../images/bg.svg') center center fixed;
 	background-size:cover;
 	box-shadow:0 0 50px rgba(0,0,0,.1) inset;
 }
@@ -528,7 +528,7 @@ body.connected #login{
 }
 /* The background, which is behind the text */
 #tabs > li > span:before{
-	background:url('images/torrent.svg') top center no-repeat;
+	background:url('../images/torrent.svg') top center no-repeat;
 	background-size:70px 70px;
 	position:absolute;
 	top:5px;
@@ -557,13 +557,13 @@ body.connected #login{
 }
 /* So that each tab has its own background */
 #tabs > li:nth-child(2) > span:before{
-	background-image:url('images/community.svg');
+	background-image:url('../images/community.svg');
 }
 #tabs > li:nth-child(3) > span:before{
-	background-image:url('images/help.svg');;
+	background-image:url('../images/help.svg');;
 }
 #tabs > li:nth-child(4) > span:before{
-	background-image:url('images/account.svg');;
+	background-image:url('../images/account.svg');;
 }
 /***** Submenu *****/
 #tabs > li > ul{
@@ -588,7 +588,7 @@ body.connected #login{
 #tabs > li > ul:before{
 	z-index:1;
 	content:'';
-	background:url('images/torrent.svg') center -23px no-repeat;
+	background:url('../images/torrent.svg') center -23px no-repeat;
 	background-size:70px 70px;
 	display:block;
 	position:absolute;
@@ -600,13 +600,13 @@ body.connected #login{
 }
 /* Make it different for each tab */
 #tabs > li:nth-child(2) > ul:before{
-	background-image:url('images/community.svg');
+	background-image:url('../images/community.svg');
 }
 #tabs > li:nth-child(3) > ul:before{
-	background-image:url('images/help.svg');;
+	background-image:url('../images/help.svg');;
 }
 #tabs > li:nth-child(4) > ul:before{
-	background-image:url('images/account.svg');;
+	background-image:url('../images/account.svg');;
 }
 /* Little shadow */
 #tabs > li > ul:after{

@@ -7,14 +7,18 @@ Router.route('/torrents/add/',function(){
 	});
 }, {
 	name:"torrents.add",
-	onBeforeAction:function(){
-		if(!Session.get('torrent_add') || Session.get('torrent_add').step == 99/* FIXME Random step ID */)
+	onRun:function(){
+		if(!Session.get('torrent_add') || Session.get('torrent_add').step == 1 || Session.get('torrent_add').step == 99/* FIXME Random step ID - that's the number used as the end of the upload */)
 			resetTorrentAddData(); //Initialize the form data for the first time or when the user comes back after a done upload
+		else{
+			if(!confirm("We have traces of a cancelled upload. Would you like to get back your work ?"))
+				resetTorrentAddData();
+		}
 		this.next(); // Don't forget that
 	}
 });
 
-// Reset the data related to the upload form. Called when the form gets displayed for the first time and on a successful upload
+// Reset the data related to the upload form. Called when the form gets displayed for the first time and on a successful upload -  Using Session enables us to come back to the upload form gracefully instead of losing every data if the user clicks on a link without wanting it.
 function resetTorrentAddData(){
 	Session.set('torrent_add', {
 		step:1
@@ -23,14 +27,17 @@ function resetTorrentAddData(){
 
 /***** Template Helpers *****/
 Template.torrents_add.helpers({
-	'stepIs':function(i){
+	'stepIs':function(i){ // Get the current step
 		return i == Session.get('torrent_add').step;
 	},
-	'categories':function(){
+	'categories':function(){ // Get categories
 		result=[];
 		for(i=0; i<Meteor.settings.public.n_cats; i++)
-			result.push({name:i18n("categories." + i)});
+			result.push({name:i18n("categories." + i), number: i});
 		return result;
+	},
+	'catIs':function(i){
+		return i == Session.get('torrent_add').type;
 	}
 });
 
@@ -40,7 +47,16 @@ Template.torrents_add.events({
 	'change #step1 input[type="file"]':function(){ // Reset Warnings when the user changes the file
 		$('#torrent_add .error, #torrent_add .warn').remove();
 	},
-	'click button':function(event){ // When the user clicks the "Submit Button"
+	'click #catselector span':function(event){
+		if($(event.currentTarget).hasClass('selected'))
+			return;
+		else{
+			var status = Session.get('torrent_add');
+			status.type = parseInt(event.currentTarget.className.split('-')[1]); //TODO : When dealing with huge torrent files, this does not work properly as the JS engine has to deal with a lot of data. We should use a ReactiveVar or something like that for this routine, expected to be fast.
+			Session.set('torrent_add', status);
+		}
+	},
+	'click button[type="submit"]':function(event){ // When the user clicks the "Submit Button"
 		event.preventDefault(); // First of all, prevent the default action
 		var status=Session.get('torrent_add');
 		switch(status.step){
@@ -196,11 +212,11 @@ Template.torrents_add.events({
 						/* We increase them with the same score because if we find "evidence" that our torrent in indeed a TV show (S..E..), we'll boost it a lot.
 						If that's not the case, we take the first with the highest score, so we'll fallback to movie */
 						types[1] += 2 * exts[ext];
-						types[3] += 2 * exts[ext];
+						types[2] += 2 * exts[ext];
 					}
 					// Music - 2
 					else if(['mp3', 'wav', 'ogg', 'oga', 'flac'].indexOf(ext) != -1)
-						types[2] += 2 * exts[ext];
+						types[3] += 2 * exts[ext];
 					// Books - 4
 					else if(['pdf', 'djvu', 'djv', 'rtf', 'epub', 'chm', 'lit', 'azw', 'azw3', 'mobi'])
 						types[4] += exts[ext];
@@ -220,8 +236,8 @@ Template.torrents_add.events({
 				// Set our Smart Guess variable, we'll probably change a lot of things but these are the defaults
 				status.smartGuess = {
 					name: intToString(torrentData.info.name),
-					type: type
 				}
+				status.type = type;
 				
 				// Just one thing with single-file torrents : remove the extension
 				if(n_files == 1 && n_folders == 0){
@@ -245,7 +261,7 @@ Template.torrents_add.events({
 				} else if(type == 1){ // If we found a video torrent
 					var more; // more is the rest of the data we can analyse
 					if(/[ \-]S[0-9]{1,}/i.test(status.smartGuess.name)){ // If we have S** in the files, which reveals a TV Show (S01 = Season 01)
-						status.smartGuess.type = 3; // Set the type to TV Show : 3
+						status.type = 2; // Set the type to TV Show : 2
 						if(/[ \-]S[0-9]+.+?E[0-9]+[ \-]/i.test(status.smartGuess.name)){ // Is it a specific episode ?
 							analysisResult = /^(.+?)[ \-]+S([0-9]+)(?:.+?)?E([0-9]+)[ \-]+(.+?)$/i.exec(status.smartGuess.name);
 							// Expected format : "<Show Name> - S**E**"

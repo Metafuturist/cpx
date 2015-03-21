@@ -116,8 +116,8 @@ i18n.map('en', {
 	categories : {
 		0 : 'Applications',
 		1 : 'Movies',
-		2 : 'Music',
-		3 : 'TV Shows',
+		2 : 'TV Shows',
+		3 : 'Music',
 		4 : 'Books',
 		5 : 'Other'
 	},
