@@ -768,6 +768,34 @@ body.connected #login{
 	box-shadow:0 2px 10px rgba(0,0,0,0.2) inset;
 	border-radius:0 0 10px 10px;
 }
+/*** Buttons ***/
+#main button.red, #main button.green, #main button.blue{
+	line-height:30px;
+	font-size:16px;
+	color:white;
+	text-shadow:0 0 2px black;
+	border:1px solid #600;
+	background:linear-gradient(to bottom, #f66, #c44);
+	border-radius:5px;
+	cursor:pointer;
+}
+#main button.green{
+	background:linear-gradient(to bottom, #69E469, #47BC47);
+	border-color:#006601;
+}
+#main button.blue{
+	background:linear-gradient(to bottom, #6262EF, #4D4DA5);
+	border-color:#008;
+}
+#main button.red:hover{
+	background:linear-gradient(to bottom, #E99494, #E15D5D);
+}
+#main button.green:hover{
+	background:linear-gradient(to bottom, #94F694, #50D25F);
+}
+#main button.blue:hover{
+	background:linear-gradient(to bottom, #9D9BFF, #5D5DD2);
+}
 /** About **/
 #content #about{
 	display:block;

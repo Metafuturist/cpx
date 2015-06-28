@@ -31,6 +31,10 @@
 	cursor:pointer;
 	background:linear-gradient(to bottom, #A8EAA8, #74CE74) repeat scroll 0% 0% transparent;
 }
+/* Reset the form */
+#torrent_add button#reset_add{
+	float:right;
+}
 /***** STEP 1 *****/
 /* File Input */
 #torrent_add form input[type="file"]{

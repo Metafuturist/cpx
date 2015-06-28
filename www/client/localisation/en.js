@@ -42,13 +42,17 @@ i18n.map('en', {
 		add      : {
 			name  : "Upload",
 			title : "Add a torrent",
+			reset : {
+				button  : "Reset the form",
+				confirm : "Are you sure you want to reset the upload form ?"
+			},
 			step  : {
 				1 : {
-					title : "Step 1 : Select your torrent file",
+					title   : "Step 1 : Select your torrent file",
 					summary : "in {$1} file(s) and {$2} folder(s) using file :<br><code>{$3}</code>"
 				},
 				2 : {
-					title : "Step 2 : Provide torrent details",
+					title    : "Step 2 : Provide torrent details",
 					category : "Catégory"
 				}
 			},
@@ -110,8 +114,8 @@ i18n.map('en', {
 		images    : "Images",
 		settings  : "Settings",
 		friends   : "Friends",
-		shop      : "Boutique",
-		warns     : "Avertissements"
+		shop      : "Shop",
+		warns     : "Warns"
 	},
 	categories : {
 		0 : 'Applications',

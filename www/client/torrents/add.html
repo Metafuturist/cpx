@@ -1,5 +1,6 @@
 <template name="torrents_add">
 <div id="torrent_add">
+	<button id="reset_add" class="red">{{i18n "torrents.add.reset.button"}}</button>
 	<h1>{{i18n "torrents.add.title"}}</h1>
 	<form>
 		<div id="step1">
@@ -24,6 +25,7 @@
 					{{/if}}
 				{{/each}}
 			</div>
+			<input type="text" name="release" />
 		</div>
 		{{/if}}
 		{{! Display the submit button unless we have reached the final step}}

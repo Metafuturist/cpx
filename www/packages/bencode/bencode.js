@@ -112,8 +112,8 @@ bdecode = function(myArray, type){
 
 intToString = function(array){
 	var data = new BinaryData(array), result="";
-	for(var i = 0; i < array.length; i++)
-		result += data.nextChar();
+	for(var i = data.nextChar(); i; i = data.nextChar()) // While we still have a character to add, add it - NOTE : Don't rely on array length as a character can be encoded on multiple bytes with UTF8
+		result += i;
 	return result;
 }
 

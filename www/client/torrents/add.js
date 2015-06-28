@@ -1,19 +1,15 @@
 // Add a torrent
 Router.route('/torrents/add/',function(){
-	this.render("torrents_add", {
+	this.render('torrents_add', {
 		data: function (){ // Pass some data!
 			return Session.get('torrent_add');
 		}
 	});
 }, {
-	name:"torrents.add",
+	name:'torrents.add',
 	onRun:function(){
 		if(!Session.get('torrent_add') || Session.get('torrent_add').step == 1 || Session.get('torrent_add').step == 99/* FIXME Random step ID - that's the number used as the end of the upload */)
 			resetTorrentAddData(); //Initialize the form data for the first time or when the user comes back after a done upload
-		else{
-			if(!confirm("We have traces of a cancelled upload. Would you like to get back your work ?"))
-				resetTorrentAddData();
-		}
 		this.next(); // Don't forget that
 	}
 });
@@ -23,6 +19,7 @@ function resetTorrentAddData(){
 	Session.set('torrent_add', {
 		step:1
 	});
+	Session.set('torrent_add_file', undefined);
 }
 
 /***** Template Helpers *****/
@@ -33,7 +30,7 @@ Template.torrents_add.helpers({
 	'categories':function(){ // Get categories
 		result=[];
 		for(i=0; i<Meteor.settings.public.n_cats; i++)
-			result.push({name:i18n("categories." + i), number: i});
+			result.push({name:i18n('categories.' + i), number: i});
 		return result;
 	},
 	'catIs':function(i){
@@ -46,15 +43,20 @@ Template.torrents_add.helpers({
 Template.torrents_add.events({
 	'change #step1 input[type="file"]':function(){ // Reset Warnings when the user changes the file
 		$('#torrent_add .error, #torrent_add .warn').remove();
+		Session.set('torrent_add_file', undefined);
 	},
 	'click #catselector span':function(event){
 		if($(event.currentTarget).hasClass('selected'))
 			return;
 		else{
 			var status = Session.get('torrent_add');
-			status.type = parseInt(event.currentTarget.className.split('-')[1]); //TODO : When dealing with huge torrent files, this does not work properly as the JS engine has to deal with a lot of data. We should use a ReactiveVar or something like that for this routine, expected to be fast.
+			status.type = parseInt(event.currentTarget.className.split('-')[1]);
 			Session.set('torrent_add', status);
 		}
+	},
+	'click button[id="reset_add"]':function(event){ // Reset the form
+		if(confirm(i18n("torrents.add.reset.confirm")))
+			resetTorrentAddData();
 	},
 	'click button[type="submit"]':function(event){ // When the user clicks the "Submit Button"
 		event.preventDefault(); // First of all, prevent the default action
@@ -91,9 +93,14 @@ Template.torrents_add.events({
 			fileReader.readAsArrayBuffer(file);
 			fileReader.onloadend = function(){
 				try { //Let's try to decode the data of the file we just got
-					// a - bdecode everything
-					torrentData = new Uint8Array(fileReader.result);
-					torrentData = bdecode(torrentData);
+					if(!Session.get('torrent_add_file')){
+						// a - bdecode everything
+						torrentData = new Uint8Array(fileReader.result);
+						torrentData = bdecode(torrentData);
+						Session.set('torrent_add_file', torrentData)
+					} else
+						torrentData = Session.get('torrent_add_file');
+					
 					if(!torrentData)
 						throw 'Could not parse bencoded data';
 					
@@ -179,7 +186,7 @@ Template.torrents_add.events({
 					if($('#trackerwarn').size() == 0){ // Display an error message, if not already displayed
 						return $('#step1').before('<div class="warn" id="trackerwarn">' + i18n('torrents.add.warn.tracker', Meteor.settings.public.www_name, Meteor.settings.public.tracker_host) + '</div>'); // TODO : Add a config option to completely reject or not (just fix them) torrents which don't have our tracker announce URL.
 					} else 
-						$('#trackerwarn').remove(); // Remove the warning if already displayed
+						$('#trackerwarn').remove(); // Remove the warning if already displayed, and carry on
 				}
 				// Once everything is fine, unify everything
 				delete torrentData['announce-list'];
@@ -190,7 +197,6 @@ Template.torrents_add.events({
 				/****** Let's go to step 2! ******/
 				// 1 - Set the status var with the torrent data
 				status.torrent = {};
-				status.torrent.data = torrentData;
 				status.torrent.name = file.name;
 				status.torrent.n_files = n_files;
 				status.torrent.n_folders = n_folders;
@@ -200,25 +206,26 @@ Template.torrents_add.events({
 				// 2 - Update the step number
 				status.step = 2;
 				
-				// 3 - Let's try an auto fill !
+				// 3 -  Analyse the content we got, and pre-fill the form!
+				/***** THIS SECTION MUST BE ADAPTED TO YOUR CATEGORIES *****/
 				// a - Determine the torrent type
 				var types = Array(Meteor.settings.public.n_cats).fill(0); // We'll increment a score
 				for (ext in exts){
 					// Applications - 0
-					if(['exe', 'ipa', 'apk'].indexOf(ext) != -1)
+					if(['exe', 'ipa', 'apk', 'nds', '3ds'].indexOf(ext) != -1)
 						types[0] += 2 * exts[ext];
-					// Videos - 1 (Movies) and 3 (TV Shows)
-					else if(['mkv', 'mov', 'mp4', 'avi', 'mpeg', 'webm', 'wmv', 'flv']){
+					// Videos - 1 (Movies) and 2 (TV Shows)
+					else if(['mkv', 'mov', 'mp4', 'avi', 'mpeg', 'webm', 'wmv', 'flv'].indexOf(ext) != -1){
 						/* We increase them with the same score because if we find "evidence" that our torrent in indeed a TV show (S..E..), we'll boost it a lot.
 						If that's not the case, we take the first with the highest score, so we'll fallback to movie */
 						types[1] += 2 * exts[ext];
 						types[2] += 2 * exts[ext];
 					}
-					// Music - 2
+					// Music - 3
 					else if(['mp3', 'wav', 'ogg', 'oga', 'flac'].indexOf(ext) != -1)
 						types[3] += 2 * exts[ext];
 					// Books - 4
-					else if(['pdf', 'djvu', 'djv', 'rtf', 'epub', 'chm', 'lit', 'azw', 'azw3', 'mobi'])
+					else if(['pdf', 'djvu', 'djv', 'rtf', 'epub', 'chm', 'lit', 'azw', 'azw3', 'mobi'].indexOf(ext) != -1)
 						types[4] += exts[ext];
 					// Others - 5
 					else
@@ -239,18 +246,18 @@ Template.torrents_add.events({
 				}
 				status.type = type;
 				
-				// Just one thing with single-file torrents : remove the extension
+				// b - Just one thing with single-file torrents : remove the extension
 				if(n_files == 1 && n_folders == 0){
 					status.smartGuess.name = status.smartGuess.name.split('.');
 					status.smartGuess.name = status.smartGuess.name.slice(0,status.smartGuess.name.length - 1).join(' '); // Remplace dots by spaces
 				}
 				
-				// Replace dots and underscores by spaces
+				// c - Replace dots and underscores by spaces
 				status.smartGuess.name = status.smartGuess.name.replace(/[\._]/g, ' '); // The g flag is to match every dot
 				
 				var analysisResult; // More data we could analyse
 				
-				// Some more processing - That's where the magic of Smart Guess happens!
+				// d - Some more processing - That's where the magic of Smart Guess happens!
 				if(type == 0){
 					// We can't to a lot here, but at last we can determine the version number
 					if(/[ \-]v?([a-z]+?[0-9\.]+)[ \-]/i.test(status.smartGuess.name)){
@@ -277,7 +284,7 @@ Template.torrents_add.events({
 							status.smartGuess.episode = 0;
 							more = analysisResult[3];
 						}
-					} else if(/[ \-][1-9][0-9]+[ \-]/.test(status.smartGuess.name)) { // It's a movie and we have a year isolated
+					} else if(/[ \-][1-9][0-9]+[ \-]/.test(status.smartGuess.name)){ // It's a movie and we have a year isolated
 						// We can determine the name and year
 						analysisResult = /^(.+?)[ \-]+([1-9][0-9]+)[ \-]+(.+?)$/.exec(status.smartGuess.name);
 						status.smartGuess.name = analysisResult[1];
@@ -294,19 +301,20 @@ Template.torrents_add.events({
 					} else if(/[ \-][0-9]+[pi][ \-]/i.test(status.smartGuess.name)){
 						analysisResult = /^(.+?)[ \-]+([0-9]+[pi])[ \-]+(.+?)$/i.exec(status.smartGuess.name);
 						status.smartGuess.quality = analysisResult[2].toLowerCase();
-						more = analysisResult[1] + ((analysisResult[1] && analysisResult[3])? ' ': '') + analysisResult[3];
+						status.smartGuess.name = analysisResult[1] + ((analysisResult[1] && analysisResult[3])? ' ': '') + analysisResult[3];
 					}
+					
+					// TODO : Maybe we can find the codec used ?
 					
 					// Bring back the other data in the title... With a space, eventually
 					// TODO
 				}
 				// TODO : determine the author for books and music
 				
-				// Update the variable!
-				Session.set('torrent_add', status);
 				
+				// 4 - Update the variable. We're done for the moment!
+				Session.set('torrent_add', status);
 			}
-			
 			break;
 			case 2: // TODO
 				
