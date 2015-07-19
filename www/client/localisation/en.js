@@ -53,7 +53,11 @@ i18n.map('en', {
 				},
 				2 : {
 					title    : "Step 2 : Provide torrent details",
-					category : "Catégory"
+					category : "Category",
+					release  : "Release",
+					author   : "Author",
+					year     : "Year",
+					version  : "Version"
 				}
 			},
 			warn  : {

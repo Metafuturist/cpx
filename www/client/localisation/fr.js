@@ -53,7 +53,11 @@ i18n.map('fr', {
 				},
 				2 : {
 					title    : "Etape 2 : Ajoutez quelques informations sur ce torrent",
-					category : "Catégorie"
+					category : "Catégorie",
+					release  : "Publication",
+					author   : "Auteur",
+					year     : "Année",
+					version  : "Version"
 				}
 			},
 			warn  : {

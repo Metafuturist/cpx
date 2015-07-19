@@ -1,3 +1,7 @@
 <template name="loading">
-<h1>{{i18n "loading.prepend"}}{{i18n loading}}...</h1>
+<h1>{{> loading_sentence}}</h1>
+</template>
+
+<template name="loading_sentence">
+{{i18n "loading.prepend"}}{{i18n loading}}...
 </template>

@@ -2,36 +2,46 @@
 /* This file is separated from the others so that customization is easier */
 
 /** Common style **/
-.cat-0:before, .cat-1:before, .cat-2:before, .cat-3:before, .cat-4:before, .cat-5:before{
+.category:before{
 	font-family:FontAwesome;
 	color:white;
 	border:1px solid black;
+	display:inline-block;
+	font-size:12px;
+	height:18px;
+	width:18px;
+	text-align:center;
+	line-height:18px;
+	border:1px solid black;
+	border-radius:10px;
+	vertical-align:middle;
+	text-shadow:0 0 2px black;
 }
 
 /* Category-specific style */
-.cat-0:before{ /* Applications */
+.category[data-id="0"]:before{ /* Applications */
 	content:'\f0c7'; /* NOTE : Consider replacing this by a CD when the icon becomes available in FontAwesome */
 	background:linear-gradient(to bottom, #FF5858, #C32828);
 }
-.cat-1:before{ /* Movies */
+.category[data-id="1"]:before{ /* Movies */
 	content:'\f008';
 	background:linear-gradient(to bottom, #FFAA59, #FF7500);
 }
-.cat-2:before{ /* TV Show */
-	content:'\f108'; /* NOTE : FontAwesome does not have a TV Show for the moment (expected in 5.0.0). Consider changing this later! */
+.category[data-id="2"]:before{ /* TV Show */
+	content:'\f108'; /* NOTE : FontAwesome does not have a TV icon for the moment (expected in 5.0.0). Consider changing this later! */
 	background:linear-gradient(to bottom, #EDFF48, #BBC52B);
 	/* Just a little fix so that the icon is vertically centered */
 	line-height:1.8em !important;
 }
-.cat-3:before{ /* Music */
+.category[data-id="3"]:before{ /* Music */
 	content:'\f001';
 	background:linear-gradient(to bottom, #76DA4B, #3A9328);
 }
-.cat-4:before{ /* Books */
+.category[data-id="4"]:before{ /* Books */
 	content:'\f02d';
 	background:linear-gradient(to bottom, #4A9FF2, #2A4DA2);
 }
-.cat-5:before{ /* Other */
+.category[data-id="5"]:before{ /* Other */
 	content:'\f128';
 	background:linear-gradient(to bottom, #CC3EBB, #4F1F59);
 }

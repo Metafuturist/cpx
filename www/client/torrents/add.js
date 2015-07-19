@@ -33,8 +33,31 @@ Template.torrents_add.helpers({
 			result.push({name:i18n('categories.' + i), number: i});
 		return result;
 	},
-	'catIs':function(i){
+	'catIs':function(i){ // Whether we are at step i or not
 		return i == Session.get('torrent_add').type;
+	},
+	'catName':function(i){
+		return i18n('categories.' + i);
+	},
+	'displaySubmit':function(){ // Whether to display the submit button or not
+		var status = Session.get('torrent_add');
+		if(status.step == 99)
+			return false;
+		if(status.step == 2 && (!status.author || !status.release)) // Don't display it on step 2 unless the release and author are set
+			return false;
+		return true;
+	},
+	'short':function(data){ // Used on search results to show a little description in the title field
+		data = data.replace(/"/g, "''"); // Secure the data removing quotes
+		if(data.length > 100)
+			data = data.slice(0, 100) // If the string is too long, only return the first 100 characters
+		return data;
+	},
+	'release_search_placeholder':function(){
+		return "Release name..."; // TODO : i18n call
+	},
+	'author_search_placeholder':function(){
+		return "Author name..."; // TODO : i18n call
 	}
 });
 
@@ -312,14 +335,62 @@ Template.torrents_add.events({
 				// TODO : determine the author for books and music
 				
 				
-				// 4 - Update the variable. We're done for the moment!
+				// 4 - Reset the search values, so that releases are not filtered
+				EasySearch.changeProperty('releases-with-author', 'author', 0); // 0 is equal to false, so it won't trigger anything in the query
+				
+				// 5 - Update the variable. We're done for the moment!
 				Session.set('torrent_add', status);
 			}
 			break;
-			case 2: // TODO
-				
+			// In Step 2, the user picks the Release and the Author from a list - We don't have to do anything
+			case 3:
 			break;
 		}
+	},
+	'click #step2 #author_selector > span': function(event){ // Author selection
+		// Get some data about the author
+		var author = {}, elem = $(event.currentTarget);
+		author.name = elem.text();
+		author['_id'] = elem.attr('data-id');
+		author.biography = elem.attr('title');
+		author.img = elem.find('img').attr('src');
+		
+		// Set the Session var
+		var status = Session.get('torrent_add');
+		status.author = author;
+		Session.set('torrent_add', status);
+		
+		// Also set the Release Search settings
+		EasySearch.changeProperty('releases-with-author', 'author', new Mongo.ObjectID(author['_id'])); // Don't forget to pass it as a Mongo ID, so that it matches everything correctly
+		
+		// Trigger the search again, to reload the releases with this filter
+		EasySearch.getComponentInstance({index : 'releases-with-author' }).triggerSearch();
+	},
+	'click #step2 #release_selector > span': function(event){ // Release selection
+		var status = Session.get("torrent_add"), elem = $(event.currentTarget);
+		
+		// If the author was not selected before, set it !
+		if(!status.author){
+			var author = {};
+			author.name = elem.find('i b').text();
+			author['_id'] = elem.attr('data-author-id');
+			author.biography = elem.attr('data-author-bio');
+			author.img = elem.attr('data-author-img');
 			
+			status.author = author;
+		}
+		
+		// Set the release informations
+		var release = {};
+		release['_id'] = elem.attr('data-id');
+		release.name = elem.text();
+		release.description = elem.attr('title');
+		release.img = elem.find('img').attr('src');
+		release.cat = elem.find('span.category').attr('data-id');
+		
+		status.release = release;
+		
+		// Finally, save all this data in the Session
+		Session.set('torrent_add', status);
 	}
 });
