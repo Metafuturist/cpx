@@ -34,7 +34,7 @@ Template.torrents_add.helpers({
 		return result;
 	},
 	'catIs':function(i){ // Whether we are at step i or not
-		return i == Session.get('torrent_add').type;
+		return i == Session.get('torrent_add').cat;
 	},
 	'catName':function(i){
 		return i18n('categories.' + i);
@@ -58,6 +58,12 @@ Template.torrents_add.helpers({
 	},
 	'author_search_placeholder':function(){
 		return "Author name..."; // TODO : i18n call
+	},
+	'showForm':function(name){
+		var status = Session.get('torrent_add');
+		status[name] = true;
+		Session.set('torrent_add', status);
+		return "";
 	}
 });
 
@@ -68,20 +74,53 @@ Template.torrents_add.events({
 		$('#torrent_add .error, #torrent_add .warn').remove();
 		Session.set('torrent_add_file', undefined);
 	},
-	'click #catselector span':function(event){
-		if($(event.currentTarget).hasClass('selected'))
-			return;
-		else{
-			var status = Session.get('torrent_add');
-			status.type = parseInt(event.currentTarget.className.split('-')[1]);
-			Session.set('torrent_add', status);
-		}
-	},
 	'click button[id="reset_add"]':function(event){ // Reset the form
 		if(confirm(i18n("torrents.add.reset.confirm")))
 			resetTorrentAddData();
 	},
-	'click button[type="submit"]':function(event){ // When the user clicks the "Submit Button"
+	'click #step2 #release_selector + p a':function(){ // Show the form to add a release
+		var status = Session.get('torrent_add');
+		status.addRelease = true;
+		Session.set('torrent_add', status);
+	},
+	'click #step2 #author_selector + p a':function(){ // Show the form to add an author
+		var status = Session.get('torrent_add');
+		status.addAuthor = true;
+		Session.set('torrent_add', status);
+	},
+	'click #catselector span':function(event){ // Select a category
+		if($(event.currentTarget).hasClass('selected'))
+			return;
+		else{
+			var status = Session.get('torrent_add');
+			status.cat = event.currentTarget.getAttribute('data-id');
+			Session.set('torrent_add', status);
+			// TODO : Adapt the search too!
+		}
+	},
+	'click #step2 #addRelease button.green':function(event){ // Add a Release
+		event.preventDefault();
+		// First, clean the error messages
+		$('#addRelease').parent().find('div.error').remove();
+		
+		var status = Session.get('torrent_add'), release = {}; // Data we will fill
+		
+		// Set all the fields
+		release.name = $('#upload_release').val();
+		release.img = $('#addRelease input[name="release_img"]').val();
+		release.description = $('#addRelease textarea').val();
+		release.cat = status.cat;
+		release.author = status.author;
+		try{
+			check_release(release);
+		} catch (e){
+			return $('#addRelease').prepend('<div class="error">Something went wrong :<code>' + e + '</code></div>'); // TODO : i18n call with the error message
+		}
+		Releases.insert(release, function(error, id){
+			console.log(error, id);
+		});
+	},
+	'click button[type="submit"]':function(event){ // When the user clicks the big "Submit" Button
 		event.preventDefault(); // First of all, prevent the default action
 		var status=Session.get('torrent_add');
 		switch(status.step){
@@ -254,11 +293,11 @@ Template.torrents_add.events({
 					else
 						types[5] += exts[ext];
 				}
-				// OK, let's try to determine which type got the stronger score...
-				var type = 0, max = types[0];
+				// OK, let's try to determine which type (and category) got the stronger score...
+				var cat = 0, max = types[0];
 				for (i = 0; i < Meteor.settings.public.n_cats; i++){
 					if(types[i] > max){
-						type = i;
+						cat = i;
 						max = types[i];
 					}
 				}
@@ -267,7 +306,7 @@ Template.torrents_add.events({
 				status.smartGuess = {
 					name: intToString(torrentData.info.name),
 				}
-				status.type = type;
+				status.cat = cat;
 				
 				// b - Just one thing with single-file torrents : remove the extension
 				if(n_files == 1 && n_folders == 0){
@@ -281,17 +320,17 @@ Template.torrents_add.events({
 				var analysisResult; // More data we could analyse
 				
 				// d - Some more processing - That's where the magic of Smart Guess happens!
-				if(type == 0){
+				if(cat == 0){
 					// We can't to a lot here, but at last we can determine the version number
 					if(/[ \-]v?([a-z]+?[0-9\.]+)[ \-]/i.test(status.smartGuess.name)){
 						analysisResult = /^(.+?)[ \-]+v?([a-z]+?[0-9\.]+)[ \-]+(.+?)$/i.exec(status.smartGuess.name);
 						status.smartGuess.version = analysisResult[2];
 						status.smartGuess.name = analysisResult[1] + ((analysisResult[1] && analysisResult[3])? ' ': '') + analysisResult[3]; // The ternary operator is to add a space if every part is not empty (as we removed them with the regex)
 					}
-				} else if(type == 1){ // If we found a video torrent
+				} else if(cat == 1){ // If we found a video torrent
 					var more; // more is the rest of the data we can analyse
 					if(/[ \-]S[0-9]{1,}/i.test(status.smartGuess.name)){ // If we have S** in the files, which reveals a TV Show (S01 = Season 01)
-						status.type = 2; // Set the type to TV Show : 2
+						status.cat = 2; // Set the category to TV Show : 2
 						if(/[ \-]S[0-9]+.+?E[0-9]+[ \-]/i.test(status.smartGuess.name)){ // Is it a specific episode ?
 							analysisResult = /^(.+?)[ \-]+S([0-9]+)(?:.+?)?E([0-9]+)[ \-]+(.+?)$/i.exec(status.smartGuess.name);
 							// Expected format : "<Show Name> - S**E**"
@@ -342,7 +381,9 @@ Template.torrents_add.events({
 				Session.set('torrent_add', status);
 			}
 			break;
-			// In Step 2, the user picks the Release and the Author from a list - We don't have to do anything
+			case 2:
+				
+			break;
 			case 3:
 			break;
 		}
@@ -383,12 +424,15 @@ Template.torrents_add.events({
 		// Set the release informations
 		var release = {};
 		release['_id'] = elem.attr('data-id');
-		release.name = elem.text();
+		release.name = elem.find('span:not(.category)').text();
 		release.description = elem.attr('title');
 		release.img = elem.find('img').attr('src');
 		release.cat = elem.find('span.category').attr('data-id');
 		
 		status.release = release;
+		
+		// Oh, we can continue!
+		status.step = 3;
 		
 		// Finally, save all this data in the Session
 		Session.set('torrent_add', status);

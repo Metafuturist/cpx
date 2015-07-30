@@ -1,106 +1,114 @@
 <template name="torrents_add">
-<div id="torrent_add">
+<form id="torrent_add">
 	<button id="reset_add" class="red">{{i18n "torrents.add.reset.button"}}</button>
 	<h1>{{i18n "torrents.add.title"}}</h1>
-	<form>
-		<div id="step1">
-			<h2>{{i18n "torrents.add.step.1.title"}}</h2>
-			{{#if stepIs 1}}
-			<input type="file" name="file" required accept="application/x-bittorrent" />
-			{{else}}
-			<div class="ok"><b>{{toReadableSize torrent.size}}</b> {{{i18n "torrents.add.step.1.summary" torrent.n_files torrent.n_folders torrent.name}}}</div>
-			{{/if}}
-		</div>
-		
-		{{#if stepIs 2}}
-		<div id="step2">
-			<h2>{{i18n "torrents.add.step.2.title"}}</h2>
-			<div class="columns" data-number="2">
-				<div>
-					<h3>Release</h3>
-					{{#unless release}}
-						<label for="upload_release">&#xf044;{{> esInput index="releases-with-author" id="upload_release" placeholder=release_search_placeholder value=smartGuess.release}}</label>
-						{{#ifEsHasNoResults index="releases-with-author" id="upload_release"}}
-							<div class="info">No author found. You might want to add it...</div>
-						{{/ifEsHasNoResults}}
-						{{#ifEsIsSearching index="releases-with-author" id="upload_release"}}
-							<div class="loading">&nbsp;</div>
-						{{/ifEsIsSearching}}
-						<div id="release_selector" class="step2selector">
-							{{#esEach index="releases-with-author" id="upload_release"}}
-								<span data-id="{{_id}}" data-author-id="{{_id author._id}}" data-author-img="{{author.img}}" data-author-bio="{{short author.biography}}" title="{{short description}}">
-									<img src="{{img}}" alt="{{name}}'s Picture" />
-									<span class="category" data-id="{{cat}}" title="{{catName cat}}">&nbsp;</span>{{name}}
-									<i>by <b>{{author.name}}</b></i>
-								</span>
-							{{/esEach}}
-						</div>
-						<h4>{{i18n "torrents.add.step.2.category"}}</h4>
-						<div id="catselector">{{! ONLY WHEN ADDING THE RELEASE}}
-							{{#each categories}}
-								{{#if catIs number}}
-									<span class="selected cat-{{number}}">{{name}}</span>
-								{{else}}
-									<span class="cat-{{number}}">{{name}}</span>
-								{{/if}}
-							{{/each}}
-						</div>
-					{{else}}
-					
-					{{/unless}}
-				</div>
-				<div>
-					<h3>Author</h3>
-					{{#unless author}}
-						<label for="upload_author">&#xf007;{{> esInput index="authors" id="upload_author" placeholder=author_search_placeholder}}</label>
-						{{#ifEsHasNoResults index="authors" id="upload_author"}}
-							<div class="info">No author found. You might want to add it...</div>
-						{{/ifEsHasNoResults}}
-						{{#ifEsIsSearching index="authors" id="upload_author"}}
-							<div class="loading">&nbsp;</div>
-						{{/ifEsIsSearching}}
-						<div id="author_selector" class="step2selector">
-							{{#esEach index="authors" id="upload_author"}}
-								<span data-id="{{_id}}" title="{{short biography}}"><img src="{{img}}" alt="{{name}}'s Picture" />{{name}}</span>
-							{{/esEach}}
-						</div>
-						<p>Can't find what you're looking for ? Add the author!</p>
-					{{else}}
-						<div class="step2summary">
-							<img src="{{author.img}}" alt="{{author.name}}'s Picture" />
-							<h4>{{author.name}}</h4>
-							<p>{{author.biography}}</p>
-						</div>
-					{{/unless}}
-				</div>
-			</div>
-		</div>
+	<div id="step1">
+		<h2>{{i18n "torrents.add.step.1.title"}}</h2>
+		{{#if stepIs 1}}
+		<input type="file" name="file" required accept="application/x-bittorrent" />
+		{{else}}
+		<div class="ok"><b>{{toReadableSize torrent.size}}</b> {{{i18n "torrents.add.step.1.summary" torrent.n_files torrent.n_folders torrent.name}}}</div>
 		{{/if}}
-		{{#if stepIs 3}}
-		<div id="step2">{{! First, a summary about what was done on step 2}}
-			<h2>{{i18n "torrents.add.step.2.title"}}</h2>
-			{{! Display the Selected category}}
-			{{#each categories}}
-				{{#if catIs number}}
-					<span class="cat-{{number}}"><b>{{name}}</b></span>
-				{{/if}}
-			{{/each}}
-			{{Release}} - {{Author}}
-		</div>
-		<div id="step3">
+	</div>
+	
+	{{#unless stepIs 1}}
+	<div id="step2">
+		<h2>{{i18n "torrents.add.step.2.title"}}</h2>
+		<div class="columns" data-number="2">
 			<div>
-				<h4>About the Release</h4>
-				<label for="torrent_add_year">&#xf073;<input type="number" name="year" id="torrent_add_year" placeholder="{{i18n "torrents.add.step.2.year"}}" value="{{smartGuess.year}}" /></label>
-			</div><div>
-				<h4>About the torrent</h4>
-				<textarea placeholder="Additional information"></textarea>
+				<h3>Release</h3>
+				{{#unless release}}
+					<label for="upload_release">&#xf044;{{> esInput index="releases-with-author" id="upload_release" placeholder=release_search_placeholder value=smartGuess.release}}</label>
+					{{#ifEsHasNoResults index="releases-with-author" id="upload_release"}}
+						<div class="info">No release found. You might want to add it...</div>
+						{{showForm "addRelease"}} {{! Helper call to display the form}}
+					{{/ifEsHasNoResults}}
+					{{#ifEsIsSearching index="releases-with-author" id="upload_release"}}
+						<div class="loading">&nbsp;</div>
+					{{/ifEsIsSearching}}
+					<div id="release_selector" class="step2selector">
+						{{#esEach index="releases-with-author" id="upload_release"}}
+							<span data-id="{{_id}}" data-author-id="{{_id author._id}}" data-author-img="{{author.img}}" data-author-bio="{{short author.biography}}" title="{{short description}}">
+								<img src="{{img}}" alt="{{name}}'s Picture" />
+								<span class="category" data-id="{{cat}}" title="{{catName cat}}">&nbsp;</span>
+								<span>{{name}}</span>
+								<i>by <b>{{author.name}}</b></i>
+							</span>
+						{{/esEach}}
+					</div>
+					{{#unless addRelease}}
+						<p>Can't find what you're looking for ? <a>Add the release!</a></p>
+					{{else}}
+						<h4>Add the Release</h4>
+						{{#unless author}}
+							<div class="error">You must set the author first!</div>
+						{{else}}
+							<div id="addRelease">
+								<label for="addRelease_img">&#xf03e;<input type="text" name="release_img" placeholder="Picture..." /></label>
+								<h5>Description</h5>
+								<textarea></textarea>
+								<h5>{{i18n "torrents.add.step.2.category"}}</h5>
+								<div id="catselector">
+									{{#each categories}}
+										{{#if catIs number}}
+											<span class="selected category" data-id="{{number}}"></span>
+										{{else}}
+											<span class="category" data-id="{{number}}"></span>
+										{{/if}}
+									{{/each}}
+								</div>
+								{{! TODO : Additional fields depending on the category}}
+								<button class="green">Submit</button>
+							</div>
+						{{/unless}}
+					{{/unless}}
+				{{else}}
+					{{! TODO : Button to change}}
+					<div class="step2summary">
+						<img src="{{release.img}}" alt="{{release.name}}'s Picture" />
+						<h4><span class="category" data-id="{{release.cat}}" title="{{catName release.cat}}">&nbsp;</span>{{release.name}}</h4>
+						<p>{{release.description}}</p>
+					</div>
+				{{/unless}}
+			</div>
+			<div>
+				<h3>Author</h3>
+				{{#unless author}}
+					<label for="upload_author">&#xf007;{{> esInput index="authors" id="upload_author" placeholder=author_search_placeholder}}</label>
+					{{#ifEsHasNoResults index="authors" id="upload_author"}}
+						<div class="info">No author found. You might want to add it...</div>
+						{{showForm "addAuthor"}} {{! Helper call to display the form}}
+					{{/ifEsHasNoResults}}
+					{{#ifEsIsSearching index="authors" id="upload_author"}}
+						<div class="loading">&nbsp;</div>
+					{{/ifEsIsSearching}}
+					<div id="author_selector" class="step2selector">
+						{{#esEach index="authors" id="upload_author"}}
+							<span data-id="{{_id}}" title="{{short biography}}"><img src="{{img}}" alt="{{name}}'s Picture" />{{name}}</span>
+						{{/esEach}}
+					</div>
+					<p>Can't find what you're looking for ? <a>Add the author!</a></p>
+				{{else}}
+					{{! TODO : Button to change}}
+					<div class="step2summary">
+						<img src="{{author.img}}" alt="{{author.name}}'s Picture" />
+						<h4>{{author.name}}</h4>
+						<p>{{author.biography}}</p>
+					</div>
+				{{/unless}}
 			</div>
 		</div>
-		{{/if}}
-		{{! Display the submit button}}
-		{{#if displaySubmit}}
-			<button type="submit"><span>&#xf058;</span> {{i18n "torrents.add.submit"}}</button>
-		{{/if}}
-	</form>
-</div>
+	</div>
+	{{/unless}}
+	{{#if stepIs 3}}
+	<div id="step3">
+		<h2>Step 3 : Technical informations</h2>
+		<textarea placeholder="Additional information"></textarea>
+	</div>
+	{{/if}}
+	{{! Display the submit button}}
+	{{#if displaySubmit}}
+		<button type="submit"><span>&#xf058;</span> {{i18n "torrents.add.submit"}}</button>
+	{{/if}}
+</form>
 </template>

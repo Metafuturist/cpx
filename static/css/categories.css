@@ -1,24 +1,7 @@
 /***** CATEGORIES ICON AND COLOR *****/
 /* This file is separated from the others so that customization is easier */
 
-/** Common style **/
-.category:before{
-	font-family:FontAwesome;
-	color:white;
-	border:1px solid black;
-	display:inline-block;
-	font-size:12px;
-	height:18px;
-	width:18px;
-	text-align:center;
-	line-height:18px;
-	border:1px solid black;
-	border-radius:10px;
-	vertical-align:middle;
-	text-shadow:0 0 2px black;
-}
-
-/* Category-specific style */
+/* Category-specific style - Feel free to adapt it to your categories ! */
 .category[data-id="0"]:before{ /* Applications */
 	content:'\f0c7'; /* NOTE : Consider replacing this by a CD when the icon becomes available in FontAwesome */
 	background:linear-gradient(to bottom, #FF5858, #C32828);
@@ -44,4 +27,24 @@
 .category[data-id="5"]:before{ /* Other */
 	content:'\f128';
 	background:linear-gradient(to bottom, #CC3EBB, #4F1F59);
+}
+
+/** Common style - Normally you wouldn't want to change anything here **/
+.category:before{
+	font-family:FontAwesome;
+	color:white;
+	border:1px solid black;
+	display:inline-block;
+	font-size:12px;
+	height:18px;
+	width:18px;
+	text-align:center;
+	line-height:18px;
+	border:1px solid black;
+	border-radius:10px;
+	vertical-align:middle;
+	text-shadow:0 0 2px black;
+	font-weight:normal;
+	font-style:normal;
+	text-decoration:none;
 }

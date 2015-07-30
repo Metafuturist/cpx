@@ -26,91 +26,63 @@
 			</div>
 		</div>
 	</div>
-	<div id="main">
-		<ul id="tabs">
-			<li class="selected">
-				<span>{{i18n "torrents.name"}}</span>
-				<ul>
-					<li class="left">&#xf053;</li>
-					<li class="content">
-						<ul>
-							<li><a href="{{pathFor "torrents.home"}}">{{i18n "torrents.home.name"}}</a></li>
-							<li><form>
-								<input type="text" placeholder="{{i18n "torrents.search.title"}}"/><input type="submit" value="&#xf002;" />
-							</form></li>
-							<li><a>{{i18n "torrents.best.name"}}</a></li>
-							<li><a>{{i18n "torrents.random"}}</a></li>
-							<li><a href="{{pathFor route="torrents.add"}}">{{i18n "torrents.add.name"}}</a></li>
-						</ul>
-					</li>
-					<li class="right">&#xf054;</li>
-				</ul>
-			</li>
-			<li>
-				<span>{{i18n "community.name"}}</span>
-				<ul>
-					<li class="left">&#xf053;</li>
-					<li class="content">
-						<ul>
-							<li><a>{{i18n "community.forum.title"}}</a></li>
-							<li><form>
-								<input type="text" placeholder="{{i18n "community.forum.search.title"}}"/><input type="submit" value="&#xf002;" />
-							</form></li>
-							<li><a>{{i18n "community.forum.myposts.title"}}</a></li>
-							<li><a>{{i18n "community.blog.title"}}</a></li>
-							<li><a>{{i18n "community.imagehost"}}</a></li>
-							<li><a>{{i18n "community.polls.title"}}</a></li>
-							<li><a>{{i18n "community.donations.title"}}</a></li>
-							<li><form>
-								<input type="text" placeholder="{{i18n "community.users.search.title"}}"/><input type="submit" value="&#xf002;" />
-							</form></li>
-							<li><a>{{i18n "community.messages.title"}}</a></li>
-						</ul>
-					</li>
-					<li class="right">&#xf054;</li>
-				</ul>
-			</li>
-			<li>
-				<span>{{i18n "help.name"}}</span>
-				<ul>
-					<li class="left">&#xf053;</li>
-					<li class="content">
-						<ul>
-							<li><a>{{i18n "help.wiki.title"}}</a></li>
-							<li><form>
-								<input type="text" placeholder="{{i18n "help.wiki.search.title"}}"/><input type="submit" value="&#xf002;" />
-							</form></li>
-							<li><a>{{i18n "help.staff.title"}}</a></li>
-							<li><a>{{i18n "help.rules.title"}}</a></li>
-						</ul>
-					</li>
-					<li class="right">&#xf054;</li>
-				</ul>
-			</li>
-			<li>
-				<span>{{i18n "myaccount.name"}}</span>
-				<ul>
-					<li class="left">&#xf053;</li>
-					<li class="content">
-						<ul>
-							<li><a>{{i18n "myaccount.profile"}}</a></li>
-							<li><a>{{i18n "myaccount.favorites"}}</a></li>
-							<li><a>{{i18n "myaccount.images"}}</a></li>
-							<li><a>{{i18n "myaccount.settings"}}</a></li>
-							<li><a>{{i18n "myaccount.friends"}}</a></li>
-							<li><a>{{i18n "myaccount.shop"}}</a></li>
-							<li><a>{{i18n "myaccount.warns"}}</a></li>
-						</ul>
-					</li>
-					<li class="right">&#xf054;</li>
-				</ul>
-			</li>
-		</ul>
-		<div id="page">
-			<div id="shadow">
-				{{> yield}}
-			</div>
-		</div>
+	<ul id="menu">
+		<li class="selected">
+			<span>{{i18n "torrents.name"}}</span>
+			<ul>
+				<li><a href="{{pathFor "torrents.home"}}">{{i18n "torrents.home.name"}}</a></li>
+				<li><form>
+					<input type="text" placeholder="{{i18n "torrents.search.title"}}"/><input type="submit" value="&#xf002;" />
+				</form></li>
+				<li><a>{{i18n "torrents.best.name"}}</a></li>
+				<li><a>{{i18n "torrents.random"}}</a></li>
+				<li><a href="{{pathFor route="torrents.add"}}">{{i18n "torrents.add.name"}}</a></li>
+			</ul>
+		</li>
+		<li>
+			<span>{{i18n "community.name"}}</span>
+			<ul>
+				<li><a>{{i18n "community.forum.title"}}</a></li>
+				<li><form>
+					<input type="text" placeholder="{{i18n "community.forum.search.title"}}"/><input type="submit" value="&#xf002;" />
+				</form></li>
+				<li><a>{{i18n "community.forum.myposts.title"}}</a></li>
+				<li><a>{{i18n "community.blog.title"}}</a></li>
+				<li><a>{{i18n "community.imagehost"}}</a></li>
+				<li><a>{{i18n "community.polls.title"}}</a></li>
+				<li><a>{{i18n "community.donations.title"}}</a></li>
+				<li><form>
+					<input type="text" placeholder="{{i18n "community.users.search.title"}}"/><input type="submit" value="&#xf002;" />
+				</form></li>
+				<li><a>{{i18n "community.messages.title"}}</a></li>
+			</ul>
+		</li>
+		<li>
+			<span>{{i18n "help.name"}}</span>
+			<ul>
+				<li><a>{{i18n "help.wiki.title"}}</a></li>
+				<li><form>
+					<input type="text" placeholder="{{i18n "help.wiki.search.title"}}"/><input type="submit" value="&#xf002;" />
+				</form></li>
+				<li><a>{{i18n "help.staff.title"}}</a></li>
+				<li><a>{{i18n "help.rules.title"}}</a></li>
+			</ul>
+		</li>
+		<li>
+			<span>{{i18n "myaccount.name"}}</span>
+			<ul>
+				<li><a>{{i18n "myaccount.profile"}}</a></li>
+				<li><a>{{i18n "myaccount.favorites"}}</a></li>
+				<li><a>{{i18n "myaccount.images"}}</a></li>
+				<li><a>{{i18n "myaccount.settings"}}</a></li>
+				<li><a>{{i18n "myaccount.friends"}}</a></li>
+				<li><a>{{i18n "myaccount.shop"}}</a></li>
+				<li><a>{{i18n "myaccount.warns"}}</a></li>
+			</ul>
+		</li>
+	</ul>
+	<div id="page">
+		{{> yield}}
 	</div>
 	<div id="about">
 		{{i18n "credits"}}

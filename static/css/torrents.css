@@ -4,15 +4,18 @@
 /**********\
  * UPLOAD *
 \**********/
-#torrent_add form{
+#torrent_add{
 	text-align:center;
+}
+#torrent_add h1{
+	text-align:left;
 }
 #torrent_add h2, #torrent_add h3, #torrent_add h4, #torrent_add h5, #torrent_add h6{ /* The titles are centered, don't indent them! */
 	text-indent:0;
 }
 /**** COMMON ****/
 /* Submit button */
-#torrent_add form button[type="submit"]{
+#torrent_add button[type="submit"]{
 	background:linear-gradient(to bottom, #85DE85, #54C854) repeat scroll 0% 0% transparent;
 	border:1px solid #286228;
 	display:inline-block;
@@ -26,11 +29,11 @@
 	font-weight:bold;
 }
 /* Icon in the button */
-#torrent_add form button[type="submit"] span{
+#torrent_add button[type="submit"] span{
 	padding-right:10px;
 	font-family:FontAwesome;
 }
-#torrent_add form button[type="submit"]:hover{
+#torrent_add button[type="submit"]:hover{
 	cursor:pointer;
 	background:linear-gradient(to bottom, #A8EAA8, #74CE74) repeat scroll 0% 0% transparent;
 }
@@ -39,8 +42,11 @@
 	float:right;
 }
 /***** STEP 1 *****/
+#torrent_add #step1{
+	clear:both;
+}
 /* File Input */
-#torrent_add form input[type="file"]{
+#torrent_add input[type="file"]{
 	width:80%;
 	display:block;
 	margin:10px auto 20px;
@@ -60,6 +66,17 @@
 #torrent_add #catselector{
 	display:block;
 	font-size:0;
+}
+#torrent_add #catselector span:before{
+	width:40px;
+	height:40px;
+	line-height:40px;
+	border-radius:20px;
+	font-size:25px;
+	margin:10px;
+}
+#torrent_add #catselector span.selected:before{
+	box-shadow:inset 0 0 10px white;
 }
 /* Author and Release Selector */
 #torrent_add .step2selector > span{
