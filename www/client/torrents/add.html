@@ -28,7 +28,7 @@
 					{{/ifEsIsSearching}}
 					<div id="release_selector" class="step2selector">
 						{{#esEach index="releases-with-author" id="upload_release"}}
-							<span data-id="{{_id}}" data-author-id="{{_id author._id}}" data-author-img="{{author.img}}" data-author-bio="{{short author.biography}}" title="{{short description}}">
+							<span data-id="{{_id}}" data-author-id="{{_id author._id}}" data-author-img="{{author.img}}" data-author-sum="{{short author.summary}}" title="{{short description}}">
 								<img src="{{img}}" alt="{{name}}'s Picture" />
 								<span class="category" data-id="{{cat}}" title="{{catName cat}}">&nbsp;</span>
 								<span>{{name}}</span>
@@ -84,7 +84,7 @@
 					{{/ifEsIsSearching}}
 					<div id="author_selector" class="step2selector">
 						{{#esEach index="authors" id="upload_author"}}
-							<span data-id="{{_id}}" title="{{short biography}}"><img src="{{img}}" alt="{{name}}'s Picture" />{{name}}</span>
+							<span data-id="{{_id}}" title="{{short summary}}"><img src="{{img}}" alt="{{name}}'s Picture" />{{name}}</span>
 						{{/esEach}}
 					</div>
 					<p>Can't find what you're looking for ? <a>Add the author!</a></p>
@@ -93,7 +93,7 @@
 					<div class="step2summary">
 						<img src="{{author.img}}" alt="{{author.name}}'s Picture" />
 						<h4>{{author.name}}</h4>
-						<p>{{author.biography}}</p>
+						<p>{{author.summary}}</p>
 					</div>
 				{{/unless}}
 			</div>

@@ -2,20 +2,20 @@ Crypto = Npm.require('crypto');
 // This is where the routine of the server ONLY takes place... This file and the others in the same directory WON'T be served to the client!
 Accounts.validateNewUser(function(user){
 	if(user.username.length < 3)
-		throw new Meteor.Error(403, 'login.error.tooshortuser');
+		throw new Meteor.Error(403, 'tooshortuser');
 	if(user.username.length > 30)
-		throw new Meteor.Error(403, 'login.error.toolonguser');
+		throw new Meteor.Error(403, 'toolonguser');
 	// NOTE : We can't check the length of the password because it is sent encrypted to the server. But it is client-side checked, still better than nothing.
 	user.emails.forEach(function(data){
 		if(!/.+@.+\.[a-z]{2,3}/.test(data.address))
-			throw new Meteor.Error(403, 'login.error.invalidmail');
+			throw new Meteor.Error(403, 'invalidmail');
 		if(Meteor.users.find({emails: {$elemMatch: {address: data.address}}}).count() > 0)
-			throw new Meteor.Error(403, 'login.error.mailtaken');
+			throw new Meteor.Error(403, 'mailtaken');
 	});
 	if(Meteor.users.find().count() > 42) //FIXME Read the max users value from the config! (Here:42)
-		throw new Meteor.Error(403, 'login.error.toomanyusers');
+		throw new Meteor.Error(403, 'toomanyusers');
 	if(Meteor.users.find({username: user.username}).count() > 0)
-		throw new Meteor.Error(403, 'login.error.usertaken');
+		throw new Meteor.Error(403, 'usertaken');
 	return true;
 });
 Accounts.onCreateUser(function(options, user){

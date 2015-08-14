@@ -589,13 +589,13 @@ body.connected #login{
 #menu > li > ul:before{
 	z-index:1;
 	content:'';
-	background:url('../images/torrent.svg') center -23px no-repeat;
+	background:url('../images/torrent.svg') center -24px no-repeat;
 	background-size:70px 70px;
 	display:block;
 	position:absolute;
 	right:450px;
 	width:150px;
-	top:0;
+	top:1px;
 	bottom:0;
 	opacity:0.5;
 }

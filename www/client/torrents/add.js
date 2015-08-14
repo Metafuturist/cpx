@@ -393,7 +393,7 @@ Template.torrents_add.events({
 		var author = {}, elem = $(event.currentTarget);
 		author.name = elem.text();
 		author['_id'] = elem.attr('data-id');
-		author.biography = elem.attr('title');
+		author.summary = elem.attr('title');
 		author.img = elem.find('img').attr('src');
 		
 		// Set the Session var
@@ -415,7 +415,7 @@ Template.torrents_add.events({
 			var author = {};
 			author.name = elem.find('i b').text();
 			author['_id'] = elem.attr('data-author-id');
-			author.biography = elem.attr('data-author-bio');
+			author.summary = elem.attr('data-author-sum');
 			author.img = elem.attr('data-author-img');
 			
 			status.author = author;

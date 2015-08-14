@@ -52,10 +52,10 @@ check_author = function(author, removeId){
 	if(removeId) // If we check the release, the id of the author is embedded, and we don't want to test it
 		delete author['_id'];
 	check(author, {
-		name      : String,
-		country   : String,
-		img       : String,
-		biography : String
+		name        : String,
+		country     : String,
+		img         : String,
+		description : String
 	});
 	// TODO : Much more to test !
 }

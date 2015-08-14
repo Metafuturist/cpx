@@ -45,7 +45,6 @@ Template.login.events({
 					return $('#login > div > .login h1').after($('<div>').addClass('error').html(i18n('login.error.badlogin')));
 				//Everything is OK here, let's log in the user!
 				$('body').addClass('connected');
-				Meteor.subscribe('userData', 'me'); // Load the user's data while you're on it
 			});
 			
 		} catch(e){ // If there was an error
@@ -90,9 +89,8 @@ Template.login.events({
 				$('#login > div .register input').removeAttr('disabled');
 				$('.mainblock .register form').removeClass('loading');
 				if(err)
-					return $('#login > div .register h1').after($('<div>').addClass('error').html(i18n(err.reason)));
-				$('body').addClass('connected'); //So it's ok, let's connect say you're connected
-				Meteor.subscribe('userData', 'me'); // Don't forget to load the user's data
+					return $('#login > div .register h1').after($('<div>').addClass('error').html(i18n('login.error.' + err.reason)));
+				$('body').addClass('connected'); //So it's OK, let's connect say you're connected
 			});
 			
 		} catch(e) { // If there was an error
